@@ -1,4 +1,6 @@
-# Visualizer
+# Small World Visualizer
+小世界可视化工具
+スモールワールド可視化ツール
 https://jsc723.github.io/smallworld-visualizer/
 
 # Database Updates
