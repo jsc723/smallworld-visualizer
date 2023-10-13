@@ -32,6 +32,7 @@ def simplify_ruby(ruby):
 
 def crawl():
     global data
+    uniqueNum = -100
     for n in range(1, num_pages + 1):
         print('page: ', n)
         url = f"https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=1&ctype=1&rp=100&jogai=2&jogai=9&jogai=10&jogai=17&page={n}&request_locale=ja"
@@ -52,7 +53,22 @@ def crawl():
                 card_defense = search_regex_all(card_raw, r'<span>\s*守備力(.*?)</span>')
                 card_ruby = simplify_ruby("".join(card_ruby))
                 card_name = simplify_name("".join(card_name))
-                cards_extracted.append({
+                card = {
+                    "Ruby": card_ruby,
+                    "Name": card_name,
+                    "Attribute": card_attr[0].strip() if card_attr else None,
+                    "Level": card_level[0].strip() if card_level else None,
+                    "Type": card_type[0].strip() if card_type else None,
+                    "Attack": card_attack[0].strip() if card_attack else None,
+                    "Defense": card_defense[0].strip() if card_defense else None
+                }
+                if card["Attack"] == "?":
+                    card["Attack"] = str(uniqueNum)
+                    uniqueNum -= 1
+                if card["Defense"] == "?":
+                    card["Defense"] = str(uniqueNum)
+                    uniqueNum -= 1
+                cards_extracted.append( {
                     "Ruby": card_ruby,
                     "Name": card_name,
                     "Attribute": card_attr[0].strip() if card_attr else None,

@@ -22,12 +22,15 @@ function calculateLinkStrength() {
     // Calculate the adjusted link force strength
     return initialLinkStrength * scalingFactor;
 }
-
+var nextId = 1
+function getNewId() {
+    return nextId++;
+}
 // Create sample data
-const nodes = [];
+let nodes = [];
 
 
-const links = [];
+let links = [];
 
 var link = svg.selectAll('.link')
     .data(links);
@@ -156,12 +159,15 @@ document.addEventListener('DOMContentLoaded', function () {
         displaySearchResults(topResults);
     }
 
-    function handleResultClick(event) {
+    function handleButtonAddClick(event) {
         // Retrieve the associated object from the data attribute
         const objectData = JSON.parse(event.currentTarget.getAttribute('data-object'));
     
         // Do something with the associated object
         console.log('Clicked result data:', objectData);
+        if (nodes.find(node => node.cardData.Name === objectData.Name)) {
+            return;
+        }
 
         // Calculate the center (average position) of all nodes
         const center = nodes.reduce(
@@ -176,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
         center.x = center.x / nodes.length + 5*Math.random();
         center.y = center.y / nodes.length + 5*Math.random();
         // Generate a new node with a unique ID
-        const newNode = { id: nodes.length + 1, x: center.x, y: center.y, cardData: objectData  };
+        const newNode = { id: getNewId(), x: center.x, y: center.y, cardData: objectData  };
 
         // Push the new node to the nodes array
         nodes.push(newNode);
@@ -231,6 +237,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+    function handleButtonDeleteClick(event) {
+        // Retrieve the associated object from the data attribute
+        const objectData = JSON.parse(event.currentTarget.getAttribute('data-object'));
+    
+        // Do something with the associated object
+        console.log('Clicked result data:', objectData);
+        const toRemove = nodes.find(node => node.cardData.Name === objectData.Name)
+        if (!toRemove) {
+            return;
+        }
+
+        const nodeId = toRemove.id;
+
+
+        // Remove the node by filtering the data
+        nodes = nodes.filter(node => node.id !== nodeId);
+
+        // Remove associated links by filtering the data
+        links = links.filter(link => link.source.id !== nodeId && link.target.id !== nodeId);
+
+
+        svg.selectAll('.link').filter(d => d.source.id === nodeId || d.target.id === nodeId).remove()
+        svg.selectAll('.node').filter(d => d.id === nodeId).remove()
+        svg.selectAll('.node-label').filter(d => d.id === nodeId).remove()
+
+        link = svg.selectAll('.link')
+        node = svg.selectAll('.node').data(nodes)
+        textElements = svg.selectAll('.node-label').data(nodes)
+
+        linkForce.strength(calculateLinkStrength());
+
+        // Update the simulation to consider the new node and edge
+        simulation.nodes(nodes);
+        simulation.force('link').links(links);
+        simulation.alpha(1).restart();
+
+    }
+
     function displaySearchResults(results) {
         const resultsDiv = document.getElementById('search-results');
         resultsDiv.innerHTML = ''; // Clear previous results
@@ -242,12 +286,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 const resultElement = document.createElement('div');
                 resultElement.textContent = result.Name;
 
-                const buttonElement = document.createElement('button');
-                buttonElement.textContent = 'Add';
-                buttonElement.setAttribute('data-object', JSON.stringify(result));
-                buttonElement.addEventListener('click', handleResultClick);
+                const buttonAddElement = document.createElement('button');
+                buttonAddElement.textContent = 'Add';
+                buttonAddElement.setAttribute('data-object', JSON.stringify(result));
+                buttonAddElement.addEventListener('click', handleButtonAddClick);
+
+                const buttonDeleteElement = document.createElement('button');
+                buttonDeleteElement.textContent = 'Delete';
+                buttonDeleteElement.setAttribute('data-object', JSON.stringify(result));
+                buttonDeleteElement.addEventListener('click', handleButtonDeleteClick);
     
-                resultElement.appendChild(buttonElement);
+                resultElement.appendChild(buttonAddElement);
+                resultElement.appendChild(buttonDeleteElement);
                 resultsDiv.appendChild(resultElement);
             });
         }
