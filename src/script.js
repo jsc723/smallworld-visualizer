@@ -189,11 +189,30 @@ document.addEventListener('DOMContentLoaded', function () {
     function performSearch() {
         const query = document.getElementById('search-input').value;
 
-        const results = db.filter(item => item.Name.includes(query));
-        console.log(results);
-        displaySearchResults(results);
+        // Initialize an array to store the results
+        const topResults = [];
+        const numMaxResults = 20;
+
+        for (const item of db) {
+            if (item.Name.includes(query)) {
+                topResults.push(item);
+                if (topResults.length >= numMaxResults) {
+                    break;
+                }
+            }
+        }
+        console.log(topResults);
+        displaySearchResults(topResults);
     }
 
+    function handleResultClick(event) {
+        // Retrieve the associated object from the data attribute
+        const objectData = JSON.parse(event.currentTarget.getAttribute('data-object'));
+    
+        // Do something with the associated object
+        console.log('Clicked result data:', objectData);
+    }
+//ニードル
     function displaySearchResults(results) {
         const resultsDiv = document.getElementById('search-results');
         resultsDiv.innerHTML = ''; // Clear previous results
@@ -203,7 +222,14 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             results.forEach(result => {
                 const resultElement = document.createElement('div');
-                resultElement.textContent = result.Name; // Display the relevant data
+                resultElement.textContent = result.Name;
+                
+                const buttonElement = document.createElement('button');
+                buttonElement.textContent = 'Add';
+                buttonElement.setAttribute('data-object', JSON.stringify(result));
+                buttonElement.addEventListener('click', handleResultClick);
+    
+                resultElement.appendChild(buttonElement);
                 resultsDiv.appendChild(resultElement);
             });
         }
