@@ -1,9 +1,0 @@
-.graph {
-  height: calc(100vh - 36px);
-}
-
-.finders {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-}
