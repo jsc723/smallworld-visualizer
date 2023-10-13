@@ -3,7 +3,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
-num_pages = 3
+num_pages = 65
 data = []
 
 def search_regex_all(text, regex):
