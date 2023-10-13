@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const numMaxResults = 20;
 
         for (const item of db) {
-            if (item.Name.includes(query)) {
+            if (item.Name.includes(query) || (!!item.Ruby && item.Ruby.includes(query))) {
                 topResults.push(item);
                 if (topResults.length >= numMaxResults) {
                     break;
