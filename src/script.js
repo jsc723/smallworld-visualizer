@@ -2,15 +2,15 @@ const svgContainer = d3.select('#graph-container');
 
 // Set initial SVG dimensions
 const svgWidth = window.innerWidth - 50;
-const svgHeight = window.innerHeight - 50;
+const svgHeight = window.innerHeight - 100;
 
 const svg = svgContainer.append('svg')
     .attr('width', svgWidth)
     .attr('height', svgHeight);
 
 // Calculate the center of the SVG
-const centerX = svg.attr('width') / 2 - 100;
-const centerY = svg.attr('height') / 2 - 100;
+const centerX = svg.attr('width') / 2;
+const centerY = svg.attr('height') / 2;
 
 let initialLinkStrength = 0.5; // Adjust this as needed
 
