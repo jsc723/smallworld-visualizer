@@ -93,7 +93,7 @@ function dragEnded(event, d) {
 var db = []
 // Function to load and parse JSON data from a file
 function loadData() {
-    fetch('https://raw.githubusercontent.com/jsc723/smallworld-visualizer/master/src/constants/cards.json')
+    fetch('https://raw.githubusercontent.com/jsc723/smallworld-visualizer/master/src/constants/cards-cn.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

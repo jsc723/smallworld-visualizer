@@ -26,7 +26,7 @@ def init_data():
         card["Attack"] = v["data"]["atk"]
         card["Defense"] = v["data"]["def"]
         card["Attribute"] = v["data"]["attribute"]
-        card["Level"] = v["data"]["level"]
+        card["Level"] = int(v["data"]["level"]) % 16
         card["Type"] = v["data"]["race"]
         card["Name"] = ''
         if "cn_name" in v:
