@@ -97,6 +97,28 @@ function dragEnded(event, d) {
     d.fx = null;
     d.fy = null;
 }
+var db = [{"Ruby": "にんじゃマスターハンゾー", "Name": "忍者マスターHANZO", "Attribute": "闇", "Level": "4", "Type": "\r戦士", "Attack": "1800", "Defense": null}, {"Ruby": "にんじん", "Name": "にん人", "Attribute": "闇", "Level": "4", "Type": "\r植物", "Attack": "1900", "Defense": null}, {"Ruby": "ニードルガンナー", "Name": "ニードル・ガンナー", "Attribute": "地", "Level": "1", "Type": "\r機械", "Attack": "100", "Defense": null}, {"Ruby": "ニードルギルマン", "Name": "ニードル・ギルマン", "Attribute": "水", "Level": "3", "Type": "\r海竜", "Attack": "1300", "Defense": null}, {"Ruby": "ニードルバンカー", "Name": "ニードルバンカー", "Attribute": "闇", "Level": "5", "Type": "\r機械", "Attack": "1700", "Defense": null}]
+// Function to load and parse JSON data from a file
+function loadData() {
+    fetch('data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then(data => {
+            // Handle the parsed data here
+            db = data;
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Fetch error:', error);
+        });
+}
+
+// Call the function to load and parse the JSON data
+// loadData();
 
 
 
@@ -161,5 +183,31 @@ document.addEventListener('DOMContentLoaded', function () {
         simulation.force('link').links(links);
         simulation.alpha(1).restart();
     });
+
+    document.getElementById('search-button').addEventListener('click', performSearch);
+
+    function performSearch() {
+        const query = document.getElementById('search-input').value;
+
+        const results = db.filter(item => item.Name.includes(query));
+        console.log(results);
+        displaySearchResults(results);
+    }
+
+    function displaySearchResults(results) {
+        const resultsDiv = document.getElementById('search-results');
+        resultsDiv.innerHTML = ''; // Clear previous results
+
+        if (results.length === 0) {
+            resultsDiv.innerHTML = 'No results found.';
+        } else {
+            results.forEach(result => {
+                const resultElement = document.createElement('div');
+                resultElement.textContent = result.Name; // Display the relevant data
+                resultsDiv.appendChild(resultElement);
+            });
+        }
+    }
+
 });
 

@@ -48,18 +48,18 @@ def crawl():
                 card_attr = search_regex_all(card_raw, r'title="(.)属性"')
                 card_level = search_regex_all(card_raw, r'<span>レベル(.*?)<')
                 card_type = search_regex_all(card_raw, r'【(.*?)族')
-                card_attack = search_regex_all(card_raw, r'<span>攻撃力(.*?)</span>')
-                card_defense = search_regex_all(card_raw, r'<span>守備力(.*?)</span>')
+                card_attack = search_regex_all(card_raw, r'<span>\s*攻撃力(.*?)</span>')
+                card_defense = search_regex_all(card_raw, r'<span>\s*守備力(.*?)</span>')
                 card_ruby = simplify_ruby("".join(card_ruby))
                 card_name = simplify_name("".join(card_name))
                 cards_extracted.append({
                     "Ruby": card_ruby,
                     "Name": card_name,
-                    "Attribute": card_attr[0] if card_attr else None,
-                    "Level": card_level[0] if card_level else None,
-                    "Type": card_type[0] if card_type else None,
-                    "Attack": card_attack[0] if card_attack else None,
-                    "Defense": card_defense[0] if card_defense else None
+                    "Attribute": card_attr[0].strip() if card_attr else None,
+                    "Level": card_level[0].strip() if card_level else None,
+                    "Type": card_type[0].strip() if card_type else None,
+                    "Attack": card_attack[0].strip() if card_attack else None,
+                    "Defense": card_defense[0].strip() if card_defense else None
                 })
             data += cards_extracted
 
