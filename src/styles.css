@@ -1,0 +1,24 @@
+/* Add styles for the lines (edges) */
+.link {
+    stroke: #888; /* Line color (gray in this example) */
+    stroke-width: 2; /* Line width */
+    z-index: 1;
+}
+
+/* Add styles for the nodes (vertices) */
+.node {
+    fill: #3498db; /* Node color (blue in this example) */
+    position: relative; /* To establish a stacking context */
+    z-index: 2; /* Make circle elements appear above text (use a higher value) */
+    opacity: 0.5; /* Set the opacity to make the circle 50% transparent */
+}
+
+/* Style for text elements */
+.node-label {
+    font-family: Arial, sans-serif; /* Choose your preferred font */
+    font-size: 12px; /* Adjust the font size */
+    fill: black; /* Text color (change to your desired color) */
+    text-anchor: middle; /* Center text horizontally on the node */
+    dominant-baseline: middle; /* Center text vertically on the node */
+    z-index: 0;
+}

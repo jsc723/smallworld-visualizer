@@ -57,6 +57,5 @@ def main():
     db_to_json(cards_db)
 
 
-
 if __name__ == "__main__":
     main()

@@ -58,6 +58,12 @@ simulation.nodes(nodes);
 simulation.force('link').links(links);
 
 function ticked() {
+
+    nodes.forEach(node => {
+        node.x = Math.max(0, Math.min(svgWidth, node.x));
+        node.y = Math.max(0, Math.min(svgHeight-10, node.y));
+    });
+
     link
         .attr('x1', (d) => d.source.x)
         .attr('y1', (d) => d.source.y)
@@ -93,7 +99,7 @@ function dragEnded(event, d) {
 var db = []
 // Function to load and parse JSON data from a file
 function loadData() {
-    fetch('https://raw.githubusercontent.com/jsc723/smallworld-visualizer/master/src/constants/cards-cn.json')
+    fetch(data_src_url)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -137,6 +143,15 @@ function hasEdge(card1, card2) {
 
 
 document.addEventListener('DOMContentLoaded', function () {
+
+    // Add an event listener to the input field for the "keydown" event
+    document.getElementById('search-input').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            // Check if the pressed key is "Enter"
+            event.preventDefault(); // Prevent the default behavior (form submission)
+            performSearch();
+        }
+    });
 
     document.getElementById('search-button').addEventListener('click', performSearch);
 
