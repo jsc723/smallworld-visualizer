@@ -97,10 +97,10 @@ function dragEnded(event, d) {
     d.fx = null;
     d.fy = null;
 }
-var db = [{"Ruby": "にんじゃマスターハンゾー", "Name": "忍者マスターHANZO", "Attribute": "闇", "Level": "4", "Type": "\r戦士", "Attack": "1800", "Defense": null}, {"Ruby": "にんじん", "Name": "にん人", "Attribute": "闇", "Level": "4", "Type": "\r植物", "Attack": "1900", "Defense": null}, {"Ruby": "ニードルガンナー", "Name": "ニードル・ガンナー", "Attribute": "地", "Level": "1", "Type": "\r機械", "Attack": "100", "Defense": null}, {"Ruby": "ニードルギルマン", "Name": "ニードル・ギルマン", "Attribute": "水", "Level": "3", "Type": "\r海竜", "Attack": "1300", "Defense": null}, {"Ruby": "ニードルバンカー", "Name": "ニードルバンカー", "Attribute": "闇", "Level": "5", "Type": "\r機械", "Attack": "1700", "Defense": null}]
+var db = []
 // Function to load and parse JSON data from a file
 function loadData() {
-    fetch('data.json')
+    fetch('https://raw.githubusercontent.com/jsc723/smallworld-visualizer/master/src/constants/cards.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -110,6 +110,7 @@ function loadData() {
         .then(data => {
             // Handle the parsed data here
             db = data;
+            console.log('database loaded')
         })
         .catch(error => {
             // Handle any errors that occurred during the fetch
@@ -118,7 +119,7 @@ function loadData() {
 }
 
 // Call the function to load and parse the JSON data
-// loadData();
+loadData();
 
 
 
@@ -223,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
             results.forEach(result => {
                 const resultElement = document.createElement('div');
                 resultElement.textContent = result.Name;
-                
+
                 const buttonElement = document.createElement('button');
                 buttonElement.textContent = 'Add';
                 buttonElement.setAttribute('data-object', JSON.stringify(result));
