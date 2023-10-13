@@ -1,3 +1,7 @@
+.bounded-svg {
+    border: 2px solid #000; /* Set the border style */
+}
+
 /* Add styles for the lines (edges) */
 .link {
     stroke: #888; /* Line color (gray in this example) */
