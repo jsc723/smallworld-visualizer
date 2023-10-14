@@ -165,6 +165,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('clear-btn').addEventListener('click', () => clearGraph());
     document.getElementById('import-btn').addEventListener('click', () => importJSON());
     document.getElementById('export-btn').addEventListener('click', () => exportJSON());
+
+    const deleteNodeBtn = document.getElementById('delete-node-button');
+    deleteNodeBtn.addEventListener('click', () => deleteNodeBtnClicked());
     
     const searchBridgeBtn = document.getElementById('search-bridge-button');
     searchBridgeBtn.addEventListener('click', () => searchBridge());
@@ -289,9 +292,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!toRemove) {
             return;
         }
+        removeNodeById(toRemove.id);
+    }
 
-        const nodeId = toRemove.id;
-
+    function removeNodeById(nodeId) {
         // Remove the node by filtering the data
         nodes = nodes.filter(node => node.id !== nodeId);
 
@@ -307,7 +311,6 @@ document.addEventListener('DOMContentLoaded', function () {
         textElements = svg.selectAll('.node-label').data(nodes)
 
         restartSimulation();
-
     }
 
     function displaySearchResults(results) {
@@ -468,6 +471,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function deleteNodeBtnClicked() {
+        const selectedCards = [];
+        svg.selectAll("[class*='selected-node']").each((d) => {
+            selectedCards.push(d.cardData);
+        })
+        if (selectedCards.length !== 1) {
+            console.log(selectedCards)
+            throw new Error("Selected node count is not 1")
+        }
+        const toRemove = nodes.find(n => n.cardData.Name === selectedCards[0].Name);
+        if (!toRemove) {
+            return;
+        }
+        removeNodeById(toRemove.id);
+    }
+
     function searchBridge() {
         document.getElementById("search-input").value = "";
         document.getElementById("search-results").innerHTML = "";
@@ -526,11 +545,15 @@ document.addEventListener('DOMContentLoaded', function () {
             clickedNode.classed("selected-node", false);
             node.classed("bridge-node", false).classed("reachable-node", false);
             searchBridgeBtn.classList.add("invisible");
+            if (selectedNodeCount !== 1) {
+                deleteNodeBtn.classList.add('invisible');
+            }
         } 
         else if (selectedNodeCount < 2) {
             node.classed("bridge-node", false).classed("reachable-node", false);
             clickedNode.classed("selected-node", true);
             if(++selectedNodeCount === 2) {
+                deleteNodeBtn.classList.add('invisible');
                 searchBridgeBtn.classList.remove("invisible");
                 const selectedIds = [];
                 svg.selectAll("[class*='selected-node']").each((d) => {
@@ -552,6 +575,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (selectedNodeCount === 1) {
+            deleteNodeBtn.classList.remove('invisible');
             node.classed("bridge-node", false).classed("reachable-node", false);
             let queue = []
             svg.selectAll("[class*='selected-node']").each((d) => {
