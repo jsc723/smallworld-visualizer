@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    function displaySearchResults(results, showDetails = false) {
+    function displaySearchResults(results) {
         const resultsDiv = document.getElementById('search-results');
         resultsDiv.innerHTML = ''; // Clear previous results
 
@@ -330,10 +330,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 resultElement.appendChild(buttonDeleteElement);
 
                 // Set the text content
-                let text = result.Name;
-                if (showDetails) {
-                    text = `${result.Name}|Lv${result.Level}|Attr${result.Attribute}|Type${result.Type}|${result.Attack}/${result.Defense}`
-                }
+                let attr_text = need_map_types ? map_cdb_attribute(result.Attribute) : result.Attribute;
+                let type_text = need_map_types ? map_cdb_race(result.Type) : result.Type;
+                let text = `${result.Name}|Lv${result.Level}|${attr_text}|${type_text}|${result.Attack}/${result.Defense}`;
+                
                 resultElement.appendChild(document.createTextNode(text));
                 resultsDiv.appendChild(resultElement);
             });
@@ -484,8 +484,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const results = [];
 
-        for (const item of db) {
-            if (hasEdge(selectedCards[1], item) && candidates.has(item.Name)) {
+        for (const [name, item] of candidates) {
+            if (hasEdge(selectedCards[1], item)) {
                 results.push(item);
             }
         }

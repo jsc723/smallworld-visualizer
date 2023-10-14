@@ -7,16 +7,18 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
+    <script src="src/utils.js"></script>
     <script>
         var data_src_url = 'https://raw.githubusercontent.com/jsc723/smallworld-visualizer/master/src/constants/cards-cn.json';
         var help_msg = '在左下角搜索栏中搜索卡名后即可添加到图中。在节点上右键可选择卡片（变为红色），选择一个节点后，从这个节点能用小世界检索到的卡会变成橙色，选择两个节点后可以当跳板的节点会变为绿色。并且，此时搜索栏的右侧会出现“搜索跳板”的按钮，点击后可以从数据库中查找跳板。再次右键选中的卡片会取消选择';
+        var need_map_types = true;
     </script>
     游戏王小世界可视化工具 by jsc723 
     <a id="cn-link" href="#"><strong>中文</strong></a>
     <a id="jp-link" href="index-jp.html">日本語</a>
 
     <div>
-        <button id="clear-btn">清除</button>
+        <button id="clear-btn">清空</button>
         <button id="export-btn">导出</button>
         <input type="file" id="fileInput">
         <button id="import-btn">导入</button>
