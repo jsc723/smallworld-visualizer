@@ -1,5 +1,17 @@
+#graph-container {
+    /* Reset padding and margin */
+    padding: 0;
+    margin: 0;
+    /* Ensure the div expands to fill its container */
+    width: 100%;
+    height: 100%;
+}
+
 .bounded-svg {
     border: 2px solid #000; /* Set the border style */
+     /* Ensure the SVG fills the entire parent div */
+    width: 100%;
+    height: 100%;
 }
 
 /* Add styles for the lines (edges) */

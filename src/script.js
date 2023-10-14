@@ -29,7 +29,6 @@ function getNewId() {
 // Create sample data
 let nodes = [];
 
-
 let links = [];
 
 var link = svg.selectAll('.link')
@@ -71,8 +70,8 @@ simulation.force('link').links(links);
 function ticked() {
 
     nodes.forEach(node => {
-        node.x = Math.max(0, Math.min(svgWidth, node.x));
-        node.y = Math.max(0, Math.min(svgHeight - 10, node.y));
+        node.x = Math.max(20, Math.min(svgWidth - 20, node.x));
+        node.y = Math.max(20, Math.min(svgHeight - 20, node.y));
     });
 
     link
