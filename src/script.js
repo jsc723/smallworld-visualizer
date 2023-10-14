@@ -184,10 +184,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Initialize an array to store the results
         const topResults = [];
-        const numMaxResults = 20;
+        const numMaxResults = 30;
 
         for (const item of db) {
-            if (item.Name.includes(query) || (!!item.Ruby && item.Ruby.includes(query))) {
+            if (item.Name.includes(query) 
+                || (!!item.Ruby && item.Ruby.includes(query))
+                || (!!item.MDName && item.MDName.includes(query))) {
                 topResults.push(item);
                 if (topResults.length >= numMaxResults) {
                     break;
