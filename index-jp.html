@@ -9,6 +9,7 @@
 <body>
     <script>
         var data_src_url = 'https://raw.githubusercontent.com/jsc723/smallworld-visualizer/master/src/constants/cards.json';
+        var help_msg = '左下のサーチバーからカード名をサーチし、グラフに追加できます。グラフが生成できたら、ノードの上で右クリックしたらカードを選択できます（選択されたカードは赤になります）。カードを二枚選択したら、デッキの中の中継カードは自動的に表示されます（緑になります）。選択したカードをもう一度右クリックしたら選択前の状態に戻ります。';
     </script>
     遊戯王スモールワールド可視化ツール by jsc723 
     <a id="cn-link" href="index.html">中文</a>
@@ -22,10 +23,11 @@
     </div>
     
     <div id="graph-container" class="bounded-svg"></div>
-    
+
     <script src="src/script.js"></script>
     <input type="text" id="search-input" placeholder="カード名で検索">
     <button id="search-button">Search</button>
+    <a id="help-link" href="#">使用説明</a>
     <div id="search-results"></div>
 </body>
 </html>

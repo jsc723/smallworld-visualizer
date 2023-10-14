@@ -17,6 +17,16 @@
     opacity: 0.5; /* Set the opacity to make the circle 50% transparent */
 }
 
+.bridge-node {
+    fill: green;
+}
+
+
+.selected-node {
+    fill: red;
+    stroke: black;
+}
+
 /* Style for text elements */
 .node-label {
     font-family: Arial, sans-serif; /* Choose your preferred font */

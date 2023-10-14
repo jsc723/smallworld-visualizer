@@ -9,6 +9,7 @@
 <body>
     <script>
         var data_src_url = 'https://raw.githubusercontent.com/jsc723/smallworld-visualizer/master/src/constants/cards-cn.json';
+        var help_msg = '在左下角搜索栏中搜索卡名后即可添加到图中。在节点上右键可选择卡片（变为红色），选择两张卡片后会自动显示卡组中哪些可以卡可以当桥（变为绿色）。再次右键选中的卡片会取消选择';
     </script>
     游戏王小世界可视化工具 by jsc723 
     <a id="cn-link" href="#"><strong>中文</strong></a>
@@ -20,12 +21,13 @@
         <input type="file" id="fileInput">
         <button id="import-btn">导入</button>
     </div>
-    
+
     <div id="graph-container" class="bounded-svg"></div>
 
     <script src="src/script.js"></script>
     <input type="text" id="search-input" placeholder="搜索卡名">
     <button id="search-button">Search</button>
+    <a id="help-link" href="#">使用说明</a>
     <div id="search-results"></div>
 </body>
 </html>

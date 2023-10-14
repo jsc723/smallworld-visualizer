@@ -42,6 +42,8 @@ var node = svg.selectAll('.node')
 var textElements = svg.selectAll('.node-label')
     .data(nodes);
 
+var selectedNodeCount = 0;
+
 
 const linkForce = d3.forceLink().strength(calculateLinkStrength()).id((d) => d.id);
 
@@ -169,6 +171,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('search-button').addEventListener('click', performSearch);
+    document.getElementById('help-link').addEventListener('click', () => {
+        alert(help_msg);
+    });
 
     function performSearch() {
         const query = document.getElementById('search-input').value;
@@ -252,7 +257,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .call(d3.drag()
                 .on('start', dragStarted)
                 .on('drag', dragging)
-                .on('end', dragEnded));
+                .on('end', dragEnded))
+            .on('contextmenu', nodeRightClicked);
 
         link = svg.selectAll('.link').data(links)
         node = svg.selectAll('.node').data(nodes)
@@ -333,6 +339,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         nodes = []
         links = []
+
+        selectedNodeCount = 0;
 
         restartSimulation();
     }
@@ -430,12 +438,64 @@ document.addEventListener('DOMContentLoaded', function () {
                     .call(d3.drag()
                         .on('start', dragStarted)
                         .on('drag', dragging)
-                        .on('end', dragEnded));
+                        .on('end', dragEnded))
+                    .on('contextmenu', nodeRightClicked);
 
                 restartSimulation();
             };
             reader.readAsText(selectedFile);
         }
+    }
+
+
+    function nodeRightClicked(event, d) {
+        event.preventDefault(); // Prevent the default right-click context menu
+                        
+        // Your custom function to run when right-clicking a circle
+        console.log('node right clicked', d.id)
+        let clickedNode = node.filter(nodeData => nodeData.id == d.id);
+        if (clickedNode.classed("selected-node")) {
+            selectedNodeCount--;
+            clickedNode.classed("selected-node", false)
+            node.classed("bridge-node", false);
+
+        } else if (selectedNodeCount < 2) {
+            clickedNode.classed("selected-node", true);
+            if(++selectedNodeCount === 2) {
+                node.classed("bridge-node", false);
+                const selectedIds = [];
+                svg.selectAll("[class*='selected-node']").each((d) => {
+                    selectedIds.push(d.id);
+                })
+                if (selectedIds.length !== 2) {
+                    console.log(selectedIds)
+                    throw new Error("Selected node count is not 2")
+                }
+                graph = new Map();
+                links.forEach(e => {
+                    if (graph.has(e.source.id)) {
+                        graph.get(e.source.id).push(e.target.id)
+                    } else {
+                        graph.set(e.source.id, [e.target.id])
+                    }
+                    if (graph.has(e.target.id)) {
+                        graph.get(e.target.id).push(e.source.id)
+                    } else {
+                        graph.set(e.target.id, [e.source.id])
+                    }
+                });
+                console.log(selectedIds, graph)
+                for(const [k, v] of graph) {
+                    console.log("check", k, v)
+                    if(selectedIds.every(item => v.includes(item))) {
+                        //this is a bridge
+                        console.log("found a bridge")
+                        node.filter(nodeData => nodeData.id == k).classed("bridge-node", true);
+                    }
+                }
+            }
+        }
+
     }
 
 });
