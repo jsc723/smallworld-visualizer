@@ -61,7 +61,7 @@ function restartSimulation(){
     simulation.force('link').links(links);
     simulation.alpha(1).restart();
 
-    node.classed("bridge-node", false);
+    node.classed("bridge-node", false).classed("reachable-node", false);
     node.classed("selected-node", false);
     selectedNodeCount = 0;
 }
@@ -512,14 +512,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 graph.set(e.target.id, [e.source.id])
             }
         });
-        node.classed("bridge-node", false).classed("reachable-node", false);
+        
         let clickedNode = node.filter(nodeData => nodeData.id == d.id);
         if (clickedNode.classed("selected-node")) {
             selectedNodeCount--;
             clickedNode.classed("selected-node", false);
+            node.classed("bridge-node", false).classed("reachable-node", false);
             searchBridgeBtn.classList.add("invisible");
         } 
         else if (selectedNodeCount < 2) {
+            node.classed("bridge-node", false).classed("reachable-node", false);
             clickedNode.classed("selected-node", true);
             if(++selectedNodeCount === 2) {
                 searchBridgeBtn.classList.remove("invisible");
@@ -543,6 +545,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (selectedNodeCount === 1) {
+            node.classed("bridge-node", false).classed("reachable-node", false);
             let queue = []
             svg.selectAll("[class*='selected-node']").each((d) => {
                 queue.push(d.id);
