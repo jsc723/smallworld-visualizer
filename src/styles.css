@@ -39,6 +39,10 @@
     stroke: black;
 }
 
+.reachable-node {
+    fill: orange;
+}
+
 /* Style for text elements */
 .node-label {
     font-family: Arial, sans-serif; /* Choose your preferred font */

@@ -497,18 +497,30 @@ document.addEventListener('DOMContentLoaded', function () {
                         
         // Your custom function to run when right-clicking a circle
         console.log('node right clicked', d.id)
+        let graph = new Map();
+        links.forEach(e => {
+            if (graph.has(e.source.id)) {
+                graph.get(e.source.id).push(e.target.id)
+            } else {
+                graph.set(e.source.id, [e.target.id])
+            }
+            if (graph.has(e.target.id)) {
+                graph.get(e.target.id).push(e.source.id)
+            } else {
+                graph.set(e.target.id, [e.source.id])
+            }
+        });
+        node.classed("bridge-node", false).classed("reachable-node", false);
         let clickedNode = node.filter(nodeData => nodeData.id == d.id);
         if (clickedNode.classed("selected-node")) {
             selectedNodeCount--;
-            clickedNode.classed("selected-node", false)
-            node.classed("bridge-node", false);
+            clickedNode.classed("selected-node", false);
             searchBridgeBtn.classList.add("invisible");
         } 
         else if (selectedNodeCount < 2) {
             clickedNode.classed("selected-node", true);
             if(++selectedNodeCount === 2) {
                 searchBridgeBtn.classList.remove("invisible");
-                node.classed("bridge-node", false);
                 const selectedIds = [];
                 svg.selectAll("[class*='selected-node']").each((d) => {
                     selectedIds.push(d.id);
@@ -517,20 +529,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log(selectedIds)
                     throw new Error("Selected node count is not 2")
                 }
-                graph = new Map();
-                links.forEach(e => {
-                    if (graph.has(e.source.id)) {
-                        graph.get(e.source.id).push(e.target.id)
-                    } else {
-                        graph.set(e.source.id, [e.target.id])
-                    }
-                    if (graph.has(e.target.id)) {
-                        graph.get(e.target.id).push(e.source.id)
-                    } else {
-                        graph.set(e.target.id, [e.source.id])
-                    }
-                });
-                console.log(selectedIds, graph)
+                
                 for(const [k, v] of graph) {
                     console.log("check", k, v)
                     if(selectedIds.every(item => v.includes(item))) {
@@ -540,6 +539,36 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             }
+        }
+
+        if (selectedNodeCount === 1) {
+            let queue = []
+            svg.selectAll("[class*='selected-node']").each((d) => {
+                queue.push(d.id);
+            });
+            if (queue.length !== 1) {
+                console.log(selectedIds)
+                throw new Error("Selected node count is not 1")
+            }
+            const sourceId = queue[0];
+
+            
+            let k = 2;
+            while(queue.length > 0 && k > 0) {
+                k--;
+                const levelSize = queue.length;
+                for(let t = 0; t < levelSize; t++) {
+                    let v = queue.shift();
+                    graph.get(v).forEach(u => {
+                        if (u !== sourceId) {
+                            queue.push(u);
+                        }
+                    })
+                }
+            }
+
+            queue = [...new Set(queue)];
+            node.filter(d => queue.includes(d.id)).classed("reachable-node", true);
         }
 
     }
