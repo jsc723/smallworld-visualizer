@@ -12,23 +12,28 @@
         var help_msg = '左下の検索ボックスからカード名を検索し、ノードとしてグラフに追加できます。グラフが生成できたら、ノードを右クリックすることで選択できます（選択されたノードは赤になります）。ノードを一個選択したら、スモール・ワールドでサーチ可能なカードが橙色になります。ノードを二個選択したら、デッキの中の中継カードとして利用できるカードのノードが緑になります。更に、検索ボックスの右に「中継カードを探す」というボタンが出現します。これを使ってデータベースから中継カードとして利用できるカードを検索することができます。選択したカードをもう一度右クリックしたら選択前の状態に戻ります。';
         var need_map_types = false;
     </script>
-    遊戯王スモール・ワールド可視化ツール by jsc723 
-    <a id="cn-link" href="index.html">中文</a>
-    <a id="jp-link" href="#"><strong>日本語</strong></a>
+
+    <div class="text-container">
+        <div style="display: inline;">遊戯王スモール・ワールド可視化ツール by jsc723</div>
+        <div style="display: inline;" class="right-align">
+            <a id="cn-link" href="index.html"><strong>中文</strong></a>
+            <a id="jp-link" href="#">日本語</a>
+        </div>
+    </div>
 
     <div>
-        <button id="clear-btn">クリア</button>
-        <button id="export-btn">書き出し</button>
-        <input type="file" id="fileInput">
-        <button id="import-btn">読み込み</button>
+        <button id="clear-btn" class="s_button_sm">クリア</button>
+        <button id="export-btn" class="s_button_sm">書き出し</button>
+        <input type="file" id="fileInput" class="s_input_sm">
+        <button id="import-btn" class="s_button_sm">読み込み</button>
     </div>
     
-    <div id="graph-container" class="bounded-svg"></div>
+    <div id="graph-container"></div>
 
     <script src="src/script.js"></script>
-    <input type="text" id="search-input" placeholder="カード名から検索">
-    <button id="search-button">検索</button>
-    <button id="search-bridge-button" class="invisible">中継カードを探す</button>
+    <input type="text" id="search-input" class="s_input" placeholder="カード名から検索">
+    <button id="search-button" class="s_button">検索</button>
+    <button id="search-bridge-button" class="s_button invisible">中継カードを探す</button>
     <a id="help-link" href="#">使用説明</a>
     <div id="search-results"></div>
 </body>

@@ -1,16 +1,13 @@
 const svgContainer = d3.select('#graph-container');
 
 // Set initial SVG dimensions
-const svgWidth = window.innerWidth - 50;
-const svgHeight = window.innerHeight - 100;
-
+console.log(window.innerWidth, window.innerHeight)
 const svg = svgContainer.append('svg')
-    .attr('width', svgWidth)
-    .attr('height', svgHeight);
+    .classed("bounded-svg", true)
 
 // Calculate the center of the SVG
-const centerX = svg.attr('width') / 2;
-const centerY = svg.attr('height') / 2;
+const centerX = svg.node().getBoundingClientRect().width / 2;
+const centerY = svg.node().getBoundingClientRect().height / 2;
 
 let initialLinkStrength = 0.5; // Adjust this as needed
 
@@ -48,7 +45,7 @@ const linkForce = d3.forceLink().strength(calculateLinkStrength()).id((d) => d.i
 
 // Define the simulation for physics-based layout
 const simulation = d3.forceSimulation()
-    .force('center', d3.forceCenter(svgWidth / 2, svgHeight / 2).strength(1.0))
+    .force('center', d3.forceCenter(svg.node().getBoundingClientRect().width / 2, svg.node().getBoundingClientRect().height / 2).strength(1.0))
     .force('charge', d3.forceManyBody().strength(-1000))
     .force('link', linkForce)
     .on('tick', ticked);
@@ -66,6 +63,13 @@ function restartSimulation(){
     selectedNodeCount = 0;
 }
 
+window.addEventListener("resize", () => {
+    const svgWidth = svg.node().getBoundingClientRect().width;
+    const svgHeight = svg.node().getBoundingClientRect().height;
+    simulation.force('center', d3.forceCenter(svgWidth / 2, svgHeight / 2).strength(1.0));
+    restartSimulation();
+})
+
 
 // Add nodes and edges to the simulation
 simulation.nodes(nodes);
@@ -74,8 +78,8 @@ simulation.force('link').links(links);
 function ticked() {
 
     nodes.forEach(node => {
-        node.x = Math.max(20, Math.min(svgWidth - 20, node.x));
-        node.y = Math.max(20, Math.min(svgHeight - 20, node.y));
+        node.x = Math.max(20, Math.min(svg.node().getBoundingClientRect().width - 20, node.x));
+        node.y = Math.max(20, Math.min(svg.node().getBoundingClientRect().height - 20, node.y));
     });
 
     link
@@ -315,16 +319,19 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             results.forEach(result => {
                 const resultElement = document.createElement('div');
+                resultElement.classList.add("search-result");
 
                 const buttonAddElement = document.createElement('button');
-                buttonAddElement.textContent = 'Add';
+                buttonAddElement.textContent = '+';
                 buttonAddElement.setAttribute('data-object', JSON.stringify(result));
                 buttonAddElement.addEventListener('click', handleButtonAddClick);
+                buttonAddElement.classList.add("s_button_search_result");
 
                 const buttonDeleteElement = document.createElement('button');
-                buttonDeleteElement.textContent = 'Delete';
+                buttonDeleteElement.textContent = '-';
                 buttonDeleteElement.setAttribute('data-object', JSON.stringify(result));
                 buttonDeleteElement.addEventListener('click', handleButtonDeleteClick);
+                buttonDeleteElement.classList.add("s_button_search_result");
 
                 resultElement.appendChild(buttonAddElement);
                 resultElement.appendChild(buttonDeleteElement);
