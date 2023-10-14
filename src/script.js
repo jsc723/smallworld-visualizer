@@ -309,7 +309,6 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             results.forEach(result => {
                 const resultElement = document.createElement('div');
-                resultElement.textContent = result.Name;
 
                 const buttonAddElement = document.createElement('button');
                 buttonAddElement.textContent = 'Add';
@@ -323,6 +322,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 resultElement.appendChild(buttonAddElement);
                 resultElement.appendChild(buttonDeleteElement);
+
+                // Set the text content
+                resultElement.appendChild(document.createTextNode(result.Name));
                 resultsDiv.appendChild(resultElement);
             });
         }
