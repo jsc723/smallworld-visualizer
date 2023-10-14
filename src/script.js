@@ -534,7 +534,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log("check", k, v)
                     if(selectedIds.every(item => v.includes(item))) {
                         //this is a bridge
-                        console.log("found a bridge")
                         node.filter(nodeData => nodeData.id == k).classed("bridge-node", true);
                     }
                 }

@@ -29,6 +29,7 @@ def init_data():
         card["Level"] = int(v["data"]["level"]) % 16
         card["Type"] = v["data"]["race"]
         card["Name"] = ''
+        card["MDName"] = v["md_name"] if "md_name" in v else ""
         if "cn_name" in v:
             card["Name"] = v["cn_name"]
         elif "cnocg_n" in v:
