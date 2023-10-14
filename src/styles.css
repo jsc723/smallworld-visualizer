@@ -48,3 +48,7 @@
     dominant-baseline: middle; /* Center text vertically on the node */
     z-index: 0;
 }
+
+.invisible {
+    display: none;
+}

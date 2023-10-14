@@ -60,6 +60,10 @@ function restartSimulation(){
     simulation.nodes(nodes);
     simulation.force('link').links(links);
     simulation.alpha(1).restart();
+
+    node.classed("bridge-node", false);
+    node.classed("selected-node", false);
+    selectedNodeCount = 0;
 }
 
 
@@ -157,8 +161,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('clear-btn').addEventListener('click', () => clearGraph());
     document.getElementById('import-btn').addEventListener('click', () => importJSON());
     document.getElementById('export-btn').addEventListener('click', () => exportJSON());
-
-
+    
+    const searchBridgeBtn = document.getElementById('search-bridge-button');
+    searchBridgeBtn.addEventListener('click', () => searchBridge());
 
     // Add an event listener to the input field for the "keydown" event
     document.getElementById('search-input').addEventListener('keydown', function (event) {
@@ -217,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
         center.y = center.y / nodes.length + 5 * Math.random();
         // Generate a new node with a unique ID
         const newNode = { id: getNewId(), x: center.x, y: center.y, cardData: objectData };
+        console.log("new node:", newNode)
 
         // Push the new node to the nodes array
         nodes.push(newNode);
@@ -280,13 +286,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const nodeId = toRemove.id;
 
-
         // Remove the node by filtering the data
         nodes = nodes.filter(node => node.id !== nodeId);
 
         // Remove associated links by filtering the data
         links = links.filter(link => link.source.id !== nodeId && link.target.id !== nodeId);
-
 
         svg.selectAll('.link').filter(d => d.source.id === nodeId || d.target.id === nodeId).remove()
         svg.selectAll('.node').filter(d => d.id === nodeId).remove()
@@ -300,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    function displaySearchResults(results) {
+    function displaySearchResults(results, showDetails = false) {
         const resultsDiv = document.getElementById('search-results');
         resultsDiv.innerHTML = ''; // Clear previous results
 
@@ -324,7 +328,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 resultElement.appendChild(buttonDeleteElement);
 
                 // Set the text content
-                resultElement.appendChild(document.createTextNode(result.Name));
+                let text = result.Name;
+                if (showDetails) {
+                    text = `${result.Name}|Lv${result.Level}|Attr${result.Attribute}|Type${result.Type}|${result.Attack}/${result.Defense}`
+                }
+                resultElement.appendChild(document.createTextNode(text));
                 resultsDiv.appendChild(resultElement);
             });
         }
@@ -340,9 +348,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         nodes = []
         links = []
-
-        selectedNodeCount = 0;
-
         restartSimulation();
     }
 
@@ -383,9 +388,47 @@ document.addEventListener('DOMContentLoaded', function () {
         URL.revokeObjectURL(url);
     }
 
+    function updateGraph() {
+        link = svg.selectAll('.link')
+        .data(links)
+        .enter()
+        .append('line')
+        .attr('class', 'link')
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y);
+    
+        textElements = svg.selectAll('.node-label')
+            .data(nodes)
+            .enter()
+            .append('text')
+            .attr('class', 'node-label') // Add a class to style the text
+            .attr('x', d => d.x) // Set the x-coordinate based on your node data
+            .attr('y', d => d.y) // Set the y-coordinate based on your node data
+            .text(d => d.cardData.Name) // Set the text content to the node's name
+            .attr('text-anchor', 'middle') // Center the text on the node
+            .attr('dy', '0.3em'); // Adjust the vertical position if needed
+
+        node = svg.selectAll('.node')
+            .data(nodes)
+            .enter()
+            .append('circle')
+            .attr('class', 'node')
+            .attr('r', 20)
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y)
+            .call(d3.drag()
+                .on('start', dragStarted)
+                .on('drag', dragging)
+                .on('end', dragEnded))
+            .on('contextmenu', nodeRightClicked);
+
+        restartSimulation();
+    }
+
     function importJSON() {
         const fileInput = document.getElementById('fileInput');
-        console.log('import json ', fileInput)
 
         // Check if a file is selected
         if (fileInput.files.length > 0) {
@@ -400,6 +443,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 let data = JSON.parse(event.target.result);
                 nodes = data.nodes;
+                nodes.forEach(d => {
+                    nextId = Math.max(nextId, d.id + 1)
+                });
                 links = data.links.map(link => {
                     return {
                         source: nodes.find(n => n.id === link.source),
@@ -407,45 +453,42 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
                 console.log(nodes, links)
-                link = svg.selectAll('.link')
-                    .data(links)
-                    .enter()
-                    .append('line')
-                    .attr('class', 'link')
-                    .attr('x1', d => d.source.x)
-                    .attr('y1', d => d.source.y)
-                    .attr('x2', d => d.target.x)
-                    .attr('y2', d => d.target.y);
-                
-                textElements = svg.selectAll('.node-label')
-                    .data(nodes)
-                    .enter()
-                    .append('text')
-                    .attr('class', 'node-label') // Add a class to style the text
-                    .attr('x', d => d.x) // Set the x-coordinate based on your node data
-                    .attr('y', d => d.y) // Set the y-coordinate based on your node data
-                    .text(d => d.cardData.Name) // Set the text content to the node's name
-                    .attr('text-anchor', 'middle') // Center the text on the node
-                    .attr('dy', '0.3em'); // Adjust the vertical position if needed
-
-                node = svg.selectAll('.node')
-                    .data(nodes)
-                    .enter()
-                    .append('circle')
-                    .attr('class', 'node')
-                    .attr('r', 20)
-                    .attr('cx', d => d.x)
-                    .attr('cy', d => d.y)
-                    .call(d3.drag()
-                        .on('start', dragStarted)
-                        .on('drag', dragging)
-                        .on('end', dragEnded))
-                    .on('contextmenu', nodeRightClicked);
-
-                restartSimulation();
+                updateGraph();
             };
             reader.readAsText(selectedFile);
         }
+    }
+
+    function searchBridge() {
+        document.getElementById("search-input").value = "";
+        document.getElementById("search-results").innerHTML = "";
+
+        const selectedCards = [];
+        svg.selectAll("[class*='selected-node']").each((d) => {
+            selectedCards.push(d.cardData);
+        })
+        if (selectedCards.length !== 2) {
+            console.log(selectedCards)
+            throw new Error("Selected node count is not 2")
+        }
+
+        const candidates = new Map();
+
+        for (const item of db) {
+            if (hasEdge(selectedCards[0], item)) {
+                candidates.set(item.Name, item);
+            }
+        }
+
+        const results = [];
+
+        for (const item of db) {
+            if (hasEdge(selectedCards[1], item) && candidates.has(item.Name)) {
+                results.push(item);
+            }
+        }
+
+        displaySearchResults(results, true);
     }
 
 
@@ -459,10 +502,12 @@ document.addEventListener('DOMContentLoaded', function () {
             selectedNodeCount--;
             clickedNode.classed("selected-node", false)
             node.classed("bridge-node", false);
-
-        } else if (selectedNodeCount < 2) {
+            searchBridgeBtn.classList.add("invisible");
+        } 
+        else if (selectedNodeCount < 2) {
             clickedNode.classed("selected-node", true);
             if(++selectedNodeCount === 2) {
+                searchBridgeBtn.classList.remove("invisible");
                 node.classed("bridge-node", false);
                 const selectedIds = [];
                 svg.selectAll("[class*='selected-node']").each((d) => {
