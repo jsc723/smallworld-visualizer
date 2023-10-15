@@ -182,11 +182,7 @@ body, html {
         border: 0.25m solid #000; 
     }
 
-    .link {
-        stroke-width: 0.2em; 
-    }
-
-
+    
     .node-label {
         font-size: 1em; /* 14px */
     }
