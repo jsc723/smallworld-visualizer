@@ -73,13 +73,14 @@ def init_data_jp():
 
 def db_to_json(db, out_path):
     with open(out_path, "w", encoding='utf8') as outfile: 
+        outfile.write("var db = ")
         json.dump(db, outfile, ensure_ascii=False)
         print('write to', out_path)
 
 
 def main():
-    db_to_json(init_data_cn(), "../src/constants/cards-cn.json")
-    db_to_json(init_data_jp(), "../src/constants/cards-jp.json")
+    db_to_json(init_data_cn(), "../src/constants/cards-cn.js")
+    db_to_json(init_data_jp(), "../src/constants/cards-jp.js")
 
 
 

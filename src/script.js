@@ -109,30 +109,8 @@ function dragEnded(event, d) {
     d.fx = null;
     d.fy = null;
 }
-var db = []
-// Function to load and parse JSON data from a file
-function loadData() {
-    fetch(data_src_url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json(); // Parse the JSON response
-        })
-        .then(data => {
-            // Handle the parsed data here
-            db = data;
-            console.log('database loaded')
-        })
-        .catch(error => {
-            // Handle any errors that occurred during the fetch
-            console.error('Fetch error:', error);
-        });
-}
 
-// Call the function to load and parse the JSON data
-loadData();
-
+// db now defined in cards-*.js
 
 function hasEdge(card1, card2) {
     let x = 0
@@ -370,12 +348,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const cell3 = document.createElement('td');
                 cell3.classList.add('table-cell');
-                const attr_text = need_map_types ? map_cdb_attribute(result.Attribute) : result.Attribute;
+                const attr_text = map_cdb_attribute(result.Attribute);
                 cell3.textContent = attr_text;
 
                 const cell4 = document.createElement('td');
                 cell4.classList.add('table-cell');
-                const type_text = need_map_types ? map_cdb_race(result.Type) : result.Type;
+                const type_text = map_cdb_race(result.Type);
                 cell4.textContent = type_text;
 
                 const cell5 = document.createElement('td');
