@@ -12,7 +12,7 @@ def getScore(card, comparison):
 
 
 
-def init_data():
+def init_data_cn():
     db = []
     cards = None
     with open("ygocdb.com.cards/cards.json", "r", encoding="UTF-8") as f:
@@ -34,10 +34,6 @@ def init_data():
             card["Name"] = v["cn_name"]
         elif "cnocg_n" in v:
             card["Name"] = v["cnocg_n"]
-        elif "jp_name" in v:
-            card["Name"] = v["jp_name"]
-        elif "en_name" in v:
-            card["Name"].append(v["en_name"])
         else:
             continue
         if card['Attack'] == -2:
@@ -47,15 +43,44 @@ def init_data():
         db.append(card)
     return db
 
-def db_to_json(db):
-    with open("../src/constants/cards-cn.json", "w", encoding='utf8') as outfile: 
-        json.dump(db, outfile, ensure_ascii=False)
-        print('done')
+def init_data_jp():
+    db = []
+    cards = None
+    with open("ygocdb.com.cards/cards.json", "r", encoding="UTF-8") as f:
+        cards = json.load(f)
+    for v in cards.values():
+        card  = {}
+        if "data" not in v:
+            continue
+        if v["data"]["race"] == 0 or re.search(r"同调|融合|超量|连接", v["text"]["types"]):
+            continue
+        if "jp_name" not in v:
+            continue
+        card["Attack"] = v["data"]["atk"]
+        card["Defense"] = v["data"]["def"]
+        card["Attribute"] = v["data"]["attribute"]
+        card["Level"] = int(v["data"]["level"]) % 16
+        card["Type"] = v["data"]["race"]
+        card["Ruby"] = v["jp_ruby"]
+        card["Name"] = v["jp_name"]
+        
+        if card['Attack'] == -2:
+            card['Attack'] = - v['cid']
+        if card['Defense'] == -2:
+            card['Defense'] = - v['cid']
+        db.append(card)
+    return db
 
-cards_db = init_data()
+def db_to_json(db, out_path):
+    with open(out_path, "w", encoding='utf8') as outfile: 
+        json.dump(db, outfile, ensure_ascii=False)
+        print('write to', out_path)
+
 
 def main():
-    db_to_json(cards_db)
+    db_to_json(init_data_cn(), "../src/constants/cards-cn.json")
+    db_to_json(init_data_jp(), "../src/constants/cards-jp.json")
+
 
 
 if __name__ == "__main__":
