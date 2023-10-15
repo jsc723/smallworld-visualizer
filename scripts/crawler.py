@@ -3,6 +3,8 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
+#从官网爬取数据，只支持日语版，目前不用，作为备用
+
 num_pages = 65
 data = []
 
@@ -79,7 +81,7 @@ def crawl():
                 })
             data += cards_extracted
 
-    with open("../src/constants/cards.json", "w", encoding="utf-8") as outfile:
+    with open("../src/constants/cards-jp.json", "w", encoding="utf-8") as outfile:
         json.dump(data, outfile, ensure_ascii=False)
 
 # To run the web scraping:

@@ -148,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
             disableSimulationForce();
         }
     });
+    document.getElementById('clear-select-btn').addEventListener('click', () => clearSelection());
 
     window.addEventListener("resize", () => {
         const svgWidth = svg.node().getBoundingClientRect().width;
@@ -388,6 +389,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         nodes = []
         links = []
+        nextId = 1;
         restartSimulation();
     }
 
@@ -497,6 +499,15 @@ document.addEventListener('DOMContentLoaded', function () {
             };
             reader.readAsText(selectedFile);
         }
+    }
+
+    function clearSelection() {
+        node.classed("bridge-node", false)
+            .classed("reachable-node", false)
+            .classed("selected-node", false);
+        selectedNodeCount = 0;
+        deleteNodeBtn.classList.add('invisible');
+        searchBridgeBtn.classList.add('invisible');
     }
 
     function deleteNodeBtnClicked() {

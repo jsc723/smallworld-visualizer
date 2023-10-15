@@ -23,10 +23,13 @@
         
 
     <div>
-        <button id="clear-btn" class="s_button_sm">清空</button>
-        <button id="export-btn" class="s_button_sm">导出</button>
+        <button id="clear-btn" class="s_button_sm">新建</button>
+        <button id="export-btn" class="s_button_sm">保存</button>
         <input type="file" id="fileInput" class="s_input_sm">
-        <button id="import-btn" class="s_button_sm">导入</button>
+        <button id="import-btn" class="s_button_sm">读取</button>
+        <button id="clear-select-btn" class="s_button_sm">清空选择</button>
+        <label for="force-checkbox">作用力</label>
+        <input type="checkbox" id="force-checkbox" name="force-checkbox" checked>
     </div>
 
     <div id="graph-container"></div>
@@ -34,8 +37,6 @@
     
     <script src="src/script.js"></script>
     <input type="text" id="search-input" class="s_input" placeholder="搜索卡名">
-    <label for="force-checkbox">作用力</label>
-    <input type="checkbox" id="force-checkbox" name="force-checkbox" checked>
     <button id="delete-node-button" class="s_button invisible">删除节点</button>
     <button id="search-bridge-button" class="s_button invisible">搜索跳板</button>
     <a id="help-link" href="#">使用说明</a>

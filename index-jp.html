@@ -22,18 +22,19 @@
     </div>
 
     <div>
-        <button id="clear-btn" class="s_button_sm">クリア</button>
-        <button id="export-btn" class="s_button_sm">書き出し</button>
+        <button id="clear-btn" class="s_button_sm">新規</button>
+        <button id="export-btn" class="s_button_sm">セーブ</button>
         <input type="file" id="fileInput" class="s_input_sm">
-        <button id="import-btn" class="s_button_sm">読み込み</button>
+        <button id="import-btn" class="s_button_sm">ロード</button>
+        <button id="clear-select-btn" class="s_button_sm">選択解除</button>
+        <label for="force-checkbox">作用力</label>
+        <input type="checkbox" id="force-checkbox" name="force-checkbox" checked>
     </div>
     
     <div id="graph-container"></div>
 
     <script src="src/script.js"></script>
     <input type="text" id="search-input" class="s_input" placeholder="カード名から検索">
-    <label for="force-checkbox">作用力</label>
-    <input type="checkbox" id="force-checkbox" name="force-checkbox" checked>
     <button id="delete-node-button" class="s_button invisible">ノードを削除</button>
     <button id="search-bridge-button" class="s_button invisible">中継カードを探す</button>
     <a id="help-link" href="#">使用説明</a>
