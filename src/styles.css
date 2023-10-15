@@ -184,7 +184,7 @@ body, html {
 
     
     .node-label {
-        font-size: 1em; /* 14px */
+        font-size: 0.75em; /* 14px */
     }
 
     .s_input_sm {
