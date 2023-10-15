@@ -7,14 +7,14 @@ body, html {
 #graph-container {
     /* Reset padding and margin */
     padding: 0;
-    margin: 2px;
+    margin: 0.0125em;
     /* Ensure the div expands to fill its container */
     width: 99%;
-    height: calc(100% - 105px);
+    height: calc(100% - 6.25em);
 }
 
 .bounded-svg {
-    border: 2px solid #000; /* Set the border style */
+    border: 0.125em solid #000; /* Set the border style */
      /* Ensure the SVG fills the entire parent div */
     width: 100%;
     height: 100%;
@@ -24,7 +24,7 @@ body, html {
 .link {
     stroke: #888;
     /* Line color (gray in this example) */
-    stroke-width: 2;
+    stroke-width: 0.125em;
     /* Line width */
     z-index: 1;
 }
@@ -59,7 +59,7 @@ body, html {
 .node-label {
     font-family: Arial, sans-serif;
     /* Choose your preferred font */
-    font-size: 12px;
+    font-size: 1em;
     /* Adjust the font size */
     fill: black;
     /* Text color (change to your desired color) */
@@ -76,32 +76,32 @@ body, html {
 
 /* Style for the search input */
 .s_input_sm {
-    padding: 4px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 200px;
+    padding: 0.25px;
+    border: 0.125px solid #ccc;
+    border-radius: 0.25px;
+    font-size: 0.875px;
     outline: none;
+    margin: 0;
 }
 
 /* Style for the search input */
 .s_input {
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 240px;
+    padding: 0.625em;
+    border: 0.125em solid #ccc;
+    border-radius: 0.3125em;
+    font-size: 1em;
     outline: none;
+    margin: 0;
 }
 
 /* Style for the search button */
 .s_button_sm {
     background-color: #007BFF;
     color: #fff;
-    border: 1px solid #000;
-    border-radius: 4px;
-    padding: 6px 10px;
-    font-size: 14px;
+    border: 0.0625em solid #000;
+    border-radius: 0.25em;
+    padding: 0.375em 0.625em;
+    font-size: 0.875em;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -114,14 +114,14 @@ body, html {
 .s_button_search_result {
     background-color: #007BFF;
     color: #fff;
-    border: 1px solid #000;
-    border-radius: 4px;
-    width: 40px;
-    padding: 6px 10px;
-    font-size: 14px;
+    border: 0.0625em solid #000;
+    border-radius: 0.25em;
+    width: auto;
+    padding: 0.375em 0.625em;
+    font-size: 0.875em;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-right: 10px
+    margin-right: 0.625em
 }
 
 .s_button_search_result:hover {
@@ -133,11 +133,11 @@ body, html {
 .s_button {
     background-color: #007BFF;
     color: #fff;
-    border: 1px solid #000;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin-top: 2px;
-    font-size: 16px;
+    border: 0.0625em solid #000;
+    border-radius: 0.3125em;
+    padding: 0.625em 1.25em;
+    margin-top: 0.125em;
+    font-size: 1em;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -148,16 +148,58 @@ body, html {
 }
 
 .search-result {
-    margin-top: 5px;
-    /* Adjust the margin as needed */
-    margin-bottom: 5px;
+    margin-top: 0.3125em;
+    margin-bottom: 0.3125em;
 }
 .text-container {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .right-align {
     text-align: right;
     margin-left: auto;
+}
+
+/* Adjust styles for mobile */
+@media screen and (min-resolution: 2dppx) {
+    /* Style for small screens (less than 768px wide) */
+    /* Adjust font sizes, margins, and paddings as needed */
+    body, html {
+        font-size: 2em;
+    }
+
+    #graph-container {
+        /* Ensure the div expands to fill its container */
+        width: 90%;
+        height: calc(100% - 6.25em);
+        margin: 0.25em;
+    }
+
+    .bounded-svg {
+        /* Adjust border width and other styles for smaller screens */
+        border: 0.25m solid #000; 
+    }
+
+    .link {
+        stroke-width: 0.2em; 
+    }
+
+
+    .node-label {
+        font-size: 1em; /* 14px */
+    }
+
+    .s_input_sm {
+        font-size: 1em;
+        width: 90%;
+    }
+
+    .s_input {
+        font-size: 1em;
+        width: 80%;
+    }
+
+    /* ... (Other style adjustments) */
 }
