@@ -16,8 +16,8 @@
     <div class="text-container">
         <div style="display: inline;">遊戯王スモール・ワールド可視化ツール by jsc723</div>
         <div style="display: inline;" class="right-align">
-            <a id="cn-link" href="index.html"><strong>中文</strong></a>
-            <a id="jp-link" href="#">日本語</a>
+            <a id="cn-link" href="index.html">中文</a>
+            <a id="jp-link" href="#"><strong>日本語</strong></a>
         </div>
     </div>
 
@@ -32,10 +32,11 @@
 
     <script src="src/script.js"></script>
     <input type="text" id="search-input" class="s_input" placeholder="カード名から検索">
-    <button id="search-button" class="s_button">検索</button>
+    <label for="force-checkbox">作用力</label>
+    <input type="checkbox" id="force-checkbox" name="force-checkbox" checked>
     <button id="delete-node-button" class="s_button invisible">ノードを削除</button>
     <button id="search-bridge-button" class="s_button invisible">中継カードを探す</button>
     <a id="help-link" href="#">使用説明</a>
-    <div id="search-results"></div>
+    <div id="search-results" class="search-result-div"></div>
 </body>
 </html>

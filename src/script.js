@@ -44,31 +44,26 @@ var selectedNodeCount = 0;
 const linkForce = d3.forceLink().strength(calculateLinkStrength()).id((d) => d.id);
 
 // Define the simulation for physics-based layout
-const simulation = d3.forceSimulation()
-    .force('center', d3.forceCenter(svg.node().getBoundingClientRect().width / 2, svg.node().getBoundingClientRect().height / 2).strength(1.0))
-    .force('charge', d3.forceManyBody().strength(-1000))
+const simulation = d3.forceSimulation();
+function enableSimulationForce() {
+    linkForce.strength(calculateLinkStrength());
+    simulation.force('center', d3.forceCenter(svg.node().getBoundingClientRect().width / 2, svg.node().getBoundingClientRect().height / 2).strength(1.0))
+    .force('charge', d3.forceManyBody().strength(-750))
     .force('link', linkForce)
     .on('tick', ticked);
+}
+enableSimulationForce();
 
-function restartSimulation(){
-    linkForce.strength(calculateLinkStrength());
 
-    // Update the simulation to consider the new node and edge
-    simulation.nodes(nodes);
-    simulation.force('link').links(links);
-    simulation.alpha(1).restart();
 
-    node.classed("bridge-node", false).classed("reachable-node", false);
-    node.classed("selected-node", false);
-    selectedNodeCount = 0;
+function disableSimulationForce() {
+    linkForce.strength(0);
+    simulation.force('link').strength(0);
+    simulation.force('center').strength(0)
+    simulation.force('charge').strength(0);
 }
 
-window.addEventListener("resize", () => {
-    const svgWidth = svg.node().getBoundingClientRect().width;
-    const svgHeight = svg.node().getBoundingClientRect().height;
-    simulation.force('center', d3.forceCenter(svgWidth / 2, svgHeight / 2).strength(1.0));
-    restartSimulation();
-})
+
 
 
 // Add nodes and edges to the simulation
@@ -162,9 +157,42 @@ function hasEdge(card1, card2) {
 
 document.addEventListener('DOMContentLoaded', function () {
 
+
     document.getElementById('clear-btn').addEventListener('click', () => clearGraph());
     document.getElementById('import-btn').addEventListener('click', () => importJSON());
     document.getElementById('export-btn').addEventListener('click', () => exportJSON());
+    const forceCheckbox = document.getElementById('force-checkbox');
+    forceCheckbox.addEventListener('change', () => {
+        if (forceCheckbox.checked) {
+            enableSimulationForce();
+            restartSimulation();
+        } else {
+            disableSimulationForce();
+        }
+    });
+
+    window.addEventListener("resize", () => {
+        const svgWidth = svg.node().getBoundingClientRect().width;
+        const svgHeight = svg.node().getBoundingClientRect().height;
+        simulation.force('center', d3.forceCenter(svgWidth / 2, svgHeight / 2).strength(1.0));
+        restartSimulation();
+    })
+
+    function restartSimulation(){
+        if (forceCheckbox.checked) {
+            linkForce.strength(calculateLinkStrength());
+            simulation.force('link').links(links);
+        }
+    
+        // Update the simulation to consider the new node and edge
+        simulation.nodes(nodes);
+        simulation.alpha(1).restart();
+    
+        node.classed("bridge-node", false).classed("reachable-node", false);
+        node.classed("selected-node", false);
+        selectedNodeCount = 0;
+    }
+
 
     const deleteNodeBtn = document.getElementById('delete-node-button');
     deleteNodeBtn.addEventListener('click', () => deleteNodeBtnClicked());
@@ -181,14 +209,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    document.getElementById('search-button').addEventListener('click', performSearch);
+    document.getElementById("search-input").addEventListener("input", performSearch);
     document.getElementById('help-link').addEventListener('click', () => {
         alert(help_msg);
     });
 
     function performSearch() {
         const query = document.getElementById('search-input').value;
-
         // Initialize an array to store the results
         const topResults = [];
         const numMaxResults = 30;
@@ -227,8 +254,8 @@ document.addEventListener('DOMContentLoaded', function () {
             { x: 0, y: 0 }
         );
 
-        center.x = center.x / nodes.length + 5 * Math.random();
-        center.y = center.y / nodes.length + 5 * Math.random();
+        center.x = center.x / nodes.length + 50 * Math.random();
+        center.y = center.y / nodes.length + 50 * Math.random();
         // Generate a new node with a unique ID
         const newNode = { id: getNewId(), x: center.x, y: center.y, cardData: objectData };
         console.log("new node:", newNode)

@@ -55,6 +55,10 @@ body, html {
     fill: orange;
 }
 
+.search-result-div {
+    min-height: 20em; 
+}
+
 /* Style for text elements */
 .node-label {
     font-family: Arial, sans-serif;
@@ -76,10 +80,10 @@ body, html {
 
 /* Style for the search input */
 .s_input_sm {
-    padding: 0.25px;
-    border: 0.125px solid #ccc;
-    border-radius: 0.25px;
-    font-size: 0.875px;
+    padding: 0.25em;
+    border: 0.125em solid #ccc;
+    border-radius: 0.25em;
+    font-size: 0.875em;
     outline: none;
     margin: 0;
 }
@@ -91,7 +95,9 @@ body, html {
     border-radius: 0.3125em;
     font-size: 1em;
     outline: none;
-    margin: 0;
+    margin: 0.25em;
+    margin-top: 0.5em;
+    width: calc(100% - 24em);
 }
 
 /* Style for the search button */
@@ -116,7 +122,7 @@ body, html {
     color: #fff;
     border: 0.0625em solid #000;
     border-radius: 0.25em;
-    width: auto;
+    width: 3em;
     padding: 0.375em 0.625em;
     font-size: 0.875em;
     cursor: pointer;
@@ -184,7 +190,7 @@ body, html {
 
     
     .node-label {
-        font-size: 0.75em; /* 14px */
+        font-size: 0.75em;
     }
 
     .s_input_sm {
