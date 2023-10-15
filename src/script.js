@@ -314,6 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function removeNodeById(nodeId) {
+        deleteNodeBtn.classList.add('invisible');
         // Remove the node by filtering the data
         nodes = nodes.filter(node => node.id !== nodeId);
 
@@ -338,33 +339,64 @@ document.addEventListener('DOMContentLoaded', function () {
         if (results.length === 0) {
             resultsDiv.innerHTML = 'No results found.';
         } else {
+            const table = document.createElement('table');
             results.forEach(result => {
-                const resultElement = document.createElement('div');
-                resultElement.classList.add("search-result");
+                const row = document.createElement('tr');
 
+                const addButtonCell = document.createElement('td');
                 const buttonAddElement = document.createElement('button');
                 buttonAddElement.textContent = '+';
                 buttonAddElement.setAttribute('data-object', JSON.stringify(result));
                 buttonAddElement.addEventListener('click', handleButtonAddClick);
                 buttonAddElement.classList.add("s_button_search_result");
+                addButtonCell.appendChild(buttonAddElement);
 
+                const delButtonCell = document.createElement('td');
                 const buttonDeleteElement = document.createElement('button');
                 buttonDeleteElement.textContent = '-';
                 buttonDeleteElement.setAttribute('data-object', JSON.stringify(result));
                 buttonDeleteElement.addEventListener('click', handleButtonDeleteClick);
                 buttonDeleteElement.classList.add("s_button_search_result");
+                delButtonCell.appendChild(buttonDeleteElement);
 
-                resultElement.appendChild(buttonAddElement);
-                resultElement.appendChild(buttonDeleteElement);
+                            // Create a table data cell for each piece of data
+                const cell1 = document.createElement('td');
+                cell1.classList.add('table-cell');
+                cell1.textContent = result.Name;
 
-                // Set the text content
-                let attr_text = need_map_types ? map_cdb_attribute(result.Attribute) : result.Attribute;
-                let type_text = need_map_types ? map_cdb_race(result.Type) : result.Type;
-                let text = `${result.Name}|Lv${result.Level}|${attr_text}|${type_text}|${result.Attack}/${result.Defense}`;
-                
-                resultElement.appendChild(document.createTextNode(text));
-                resultsDiv.appendChild(resultElement);
+                const cell2 = document.createElement('td');
+                cell2.classList.add('table-cell');
+                cell2.textContent = `Lv${result.Level}`;
+
+                const cell3 = document.createElement('td');
+                cell3.classList.add('table-cell');
+                const attr_text = need_map_types ? map_cdb_attribute(result.Attribute) : result.Attribute;
+                cell3.textContent = attr_text;
+
+                const cell4 = document.createElement('td');
+                cell4.classList.add('table-cell');
+                const type_text = need_map_types ? map_cdb_race(result.Type) : result.Type;
+                cell4.textContent = type_text;
+
+                const cell5 = document.createElement('td');
+                cell5.classList.add('table-cell');
+                cell5.textContent = `${result.Attack}/${result.Defense}`;
+
+                const buttonsWidget = document.createElement('td')
+                buttonsWidget.classList.add('table-cell');
+                buttonsWidget.appendChild(addButtonCell);
+                buttonsWidget.appendChild(delButtonCell);
+
+                row.appendChild(buttonsWidget);
+                row.appendChild(cell1);
+                row.appendChild(cell2);
+                row.appendChild(cell3);
+                row.appendChild(cell4);
+                row.appendChild(cell5);
+
+                table.appendChild(row);
             });
+            resultsDiv.appendChild(table)
         }
     }
 
