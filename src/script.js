@@ -243,21 +243,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (nodes.find(node => node.cardData.Name === objectData.Name)) {
             return;
         }
-
-        // Calculate the center (average position) of all nodes
-        const center = nodes.reduce(
-            (accumulator, node) => {
-                accumulator.x += node.x;
-                accumulator.y += node.y;
-                return accumulator;
-            },
-            { x: 0, y: 0 }
-        );
-
-        center.x = center.x / nodes.length + 50 * Math.random();
-        center.y = center.y / nodes.length + 50 * Math.random();
+        const svgWidth = svg.node().getBoundingClientRect().width;
+        const svgHeight = svg.node().getBoundingClientRect().height;
+        const xNew = (0.2 + 0.6*Math.random()) * svgWidth;
+        const yNew = (0.2 + 0.6*Math.random()) * svgHeight;
         // Generate a new node with a unique ID
-        const newNode = { id: getNewId(), x: center.x, y: center.y, cardData: objectData };
+        const newNode = { id: getNewId(), x: xNew, y: yNew, cardData: objectData };
         console.log("new node:", newNode)
 
         // Push the new node to the nodes array
