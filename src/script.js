@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     document.getElementById('clear-btn').addEventListener('click', () => clearGraph());
+    document.getElementById('fileInput').addEventListener('change', () => importJSON());
     document.getElementById('import-btn').addEventListener('click', () => importJSON());
     document.getElementById('export-btn').addEventListener('click', () => exportJSON());
     const forceCheckbox = document.getElementById('force-checkbox');
