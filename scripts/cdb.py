@@ -21,7 +21,7 @@ def init_data():
         card  = {}
         if "data" not in v:
             continue
-        if v["data"]["race"] == 0 or re.search(r"同调|融合|超量|链接", v["text"]["types"]):
+        if v["data"]["race"] == 0 or re.search(r"同调|融合|超量|连接", v["text"]["types"]):
             continue
         card["Attack"] = v["data"]["atk"]
         card["Defense"] = v["data"]["def"]
