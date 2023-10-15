@@ -545,12 +545,13 @@ document.addEventListener('DOMContentLoaded', function () {
         svg.selectAll("[class*='selected-node']").each((d) => {
             selectedCards.push(d.cardData);
         })
-        if (selectedCards.length !== 2) {
+
+        if (selectedCards.length < 2) {
             console.log(selectedCards)
-            throw new Error("Selected node count is not 2")
+            throw new Error("Selected node count is smaller than 2")
         }
 
-        const candidates = new Map();
+        let candidates = new Map();
 
         for (const item of db) {
             if (hasEdge(selectedCards[0], item)) {
@@ -558,13 +559,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        const results = [];
-
-        for (const [name, item] of candidates) {
-            if (hasEdge(selectedCards[1], item)) {
-                results.push(item);
+        for(let i = 1; i < selectedCards.length; i++) {
+            const nextCandidates = new Map();
+            for (const [name, item] of candidates) {
+                if (hasEdge(selectedCards[i], item)) {
+                    nextCandidates.set(name, item);
+                }
             }
+            candidates = nextCandidates;
         }
+
+        const results = Array.from(candidates.values());
 
         displaySearchResults(results, true);
     }
