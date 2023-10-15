@@ -599,63 +599,62 @@ document.addEventListener('DOMContentLoaded', function () {
                 deleteNodeBtn.classList.add('invisible');
             }
         } 
-        else if (selectedNodeCount < 2) {
+        else {
             node.classed("bridge-node", false).classed("reachable-node", false);
             clickedNode.classed("selected-node", true);
-            if(++selectedNodeCount === 2) {
-                deleteNodeBtn.classList.add('invisible');
-                searchBridgeBtn.classList.remove("invisible");
-                const selectedIds = [];
-                svg.selectAll("[class*='selected-node']").each((d) => {
-                    selectedIds.push(d.id);
-                })
-                if (selectedIds.length !== 2) {
-                    console.log(selectedIds)
-                    throw new Error("Selected node count is not 2")
-                }
-                
-                for(const [k, v] of graph) {
-                    console.log("check", k, v)
-                    if(selectedIds.every(item => v.includes(item))) {
-                        //this is a bridge
-                        node.filter(nodeData => nodeData.id == k).classed("bridge-node", true);
-                    }
-                }
-            }
+            ++selectedNodeCount;
         }
-
-        if (selectedNodeCount === 1) {
-            deleteNodeBtn.classList.remove('invisible');
-            node.classed("bridge-node", false).classed("reachable-node", false);
-            let queue = []
+        
+        if(selectedNodeCount > 1) {
+            deleteNodeBtn.classList.add('invisible');
+            searchBridgeBtn.classList.remove("invisible");
+            const selectedIds = [];
             svg.selectAll("[class*='selected-node']").each((d) => {
-                queue.push(d.id);
-            });
-            if (queue.length !== 1) {
-                console.log(selectedIds)
-                throw new Error("Selected node count is not 1")
-            }
-            const sourceId = queue[0];
-
+                selectedIds.push(d.id);
+            })
             
-            let k = 2;
-            while(queue.length > 0 && k > 0) {
-                k--;
-                const levelSize = queue.length;
-                for(let t = 0; t < levelSize; t++) {
-                    let v = queue.shift();
-                    graph.get(v).forEach(u => {
-                        if (u !== sourceId) {
-                            queue.push(u);
-                        }
-                    })
+            for(const [k, v] of graph) {
+                if(selectedIds.every(item => v.includes(item))) {
+                    //this is a bridge
+                    node.filter(nodeData => nodeData.id == k).classed("bridge-node", true);
                 }
             }
-
-            queue = [...new Set(queue)];
-            node.filter(d => queue.includes(d.id)).classed("reachable-node", true);
+        } else if (selectedNodeCount === 1) {
+            deleteNodeBtn.classList.remove('invisible');
+            searchReachable(graph);
         }
 
+    }
+
+    function searchReachable(graph){
+        node.classed("bridge-node", false).classed("reachable-node", false);
+        let queue = []
+        svg.selectAll("[class*='selected-node']").each((d) => {
+            queue.push(d.id);
+        });
+        if (queue.length !== 1) {
+            console.log(selectedIds)
+            throw new Error("Selected node count is not 1")
+        }
+        const sourceId = queue[0];
+
+        
+        let k = 2;
+        while(queue.length > 0 && k > 0) {
+            k--;
+            const levelSize = queue.length;
+            for(let t = 0; t < levelSize; t++) {
+                let v = queue.shift();
+                graph.get(v).forEach(u => {
+                    if (u !== sourceId) {
+                        queue.push(u);
+                    }
+                })
+            }
+        }
+
+        queue = [...new Set(queue)];
+        node.filter(d => queue.includes(d.id)).classed("reachable-node", true);
     }
 
 });
