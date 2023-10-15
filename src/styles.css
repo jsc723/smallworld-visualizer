@@ -97,7 +97,7 @@ body, html {
     outline: none;
     margin: 0.25em;
     margin-top: 0.5em;
-    width: calc(100% - 24em);
+    width: calc(100% - 10em);
 }
 
 /* Style for the search button */
@@ -206,6 +206,11 @@ body, html {
     .s_input {
         font-size: 1em;
         width: 80%;
+    }
+
+    .my-checkbox {
+        height: 3em;
+        width: 3em;
     }
 
     /* ... (Other style adjustments) */

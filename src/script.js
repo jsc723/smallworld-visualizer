@@ -270,6 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .on('start', dragStarted)
                 .on('drag', dragging)
                 .on('end', dragEnded))
+            .on('click', nodeRightClicked)
             .on('contextmenu', nodeRightClicked);
 
         link = svg.selectAll('.link').data(links)
@@ -465,6 +466,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .on('start', dragStarted)
                 .on('drag', dragging)
                 .on('end', dragEnded))
+            .on('click', nodeRightClicked)
             .on('contextmenu', nodeRightClicked);
 
         restartSimulation();

@@ -10,12 +10,13 @@
     <script src="src/utils-cn.js"></script>
     <script src="src/constants/cards-cn.js"></script>
     <script>
-        var help_msg = '在左下角搜索栏中搜索卡名后即可添加到图中。在节点上右键可选择卡片（变为红色），选择一个节点后，从这个节点能用小世界检索到的卡会变成橙色，选择两个以上节点后可以当跳板的节点会变为绿色。并且，此时搜索栏的右侧会出现“搜索跳板”的按钮，点击后可以从数据库中查找跳板。再次右键选中的卡片会取消选择';
+        var help_msg = '在左下角搜索栏中搜索卡名后即可添加到图中。点击节点可选择卡片（变为红色），选择一个节点后，从这个节点能用小世界检索到的卡会变成橙色，选择两个以上节点后可以当跳板的节点会变为绿色。并且，此时搜索栏的右侧会出现“搜索跳板”的按钮，点击后可以从数据库中查找跳板。再次点击选中的卡片会取消选择';
         var need_map_types = true;
     </script>
         <div class="text-container">
             <div style="display: inline;">游戏王小世界可视化工具 by jsc723 </div>
             <div style="display: inline;" class="right-align">
+                <a id="help-link" href="#">使用说明</a>
                 <a id="cn-link" href="#"><strong>中文</strong></a>
                 <a id="jp-link" href="index-jp.html">日本語</a>
             </div>
@@ -39,7 +40,7 @@
     <input type="text" id="search-input" class="s_input" placeholder="搜索卡名">
     <button id="delete-node-button" class="s_button invisible">删除节点</button>
     <button id="search-bridge-button" class="s_button invisible">搜索跳板</button>
-    <a id="help-link" href="#">使用说明</a>
+    
     <div id="search-results" class="search-result-div"></div>
 </body>
 </html>
