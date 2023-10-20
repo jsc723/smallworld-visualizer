@@ -1,0 +1,4 @@
+functions-framework==3.*
+requests==2.26.0
+google-cloud-storage==1.18.1
+google-cloud-error-reporting==1.9.2
