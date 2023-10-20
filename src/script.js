@@ -142,7 +142,9 @@ function loadData(url) {
         })
         .then(data => {
             // Handle the parsed data here
-            db = data;
+            console.log(data)
+            db_update_time = data.update_time;
+            db = data.db;
             enableSearch();
         })
         .catch(error => {
@@ -153,11 +155,18 @@ function loadData(url) {
 
 var domContentLoaded = false;
 var db = [];
+var db_update_time = '';
 loadData(db_url);
 function enableSearch() {
     if (domContentLoaded && db.length > 0) {
         const e = document.getElementById('search-input');
-        e.placeholder = search_placeholder;
+        const parsedDate = new Date(db_update_time);
+        const year = parsedDate.getFullYear();
+        const month = String(parsedDate.getMonth() + 1).padStart(2, '0'); 
+        const day = String(parsedDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}/${month}/${day}`;
+        document.getElementById('db-version').textContent = `(db version: ${formattedDate})`
+        e.placeholder = `${search_placeholder}`;
         e.disabled = false;
     }
 }
