@@ -17,9 +17,11 @@
 </head>
 <body>
     <script src="src/utils-jp.js"></script>
-    <script src="src/constants/cards-jp.js"></script>
+    <!-- <script src="src/constants/cards-jp.js"></script> -->
     <script>
         var help_msg = '左下の検索ボックスからカード名を検索し、ノードとしてグラフに追加できます。グラフが生成できたら、ノードをクリックすることで選択できます（選択されたノードは赤になります）。ノードを一個選択したら、スモール・ワールドでサーチ可能なカードが橙色になります。ノードを二個以上選択したら、デッキの中の中継カードとして利用できるカードのノードが緑になります。更に、検索ボックスの右に「中継カードを探す」というボタンが出現します。これを使ってデータベースから中継カードとして利用できるカードを検索することができます。選択したカードをもう一度クリックしたら選択前の状態に戻ります。';
+        var db_url = "https://storage.googleapis.com/ygo-small-world-tool-bucket/cards-jp.json";
+        var search_placeholder = 'カード名から検索';
     </script>
 
     <div class="text-container">
@@ -44,7 +46,7 @@
     <div id="graph-container"></div>
 
     <script src="src/script.js"></script>
-    <input type="text" id="search-input" class="s_input" placeholder="カード名から検索">
+    <input type="text" id="search-input" class="s_input" placeholder="データベースをロードしています" disabled>
     <button id="delete-node-button" class="s_button invisible">ノードを削除</button>
     <button id="search-bridge-button" class="s_button invisible">中継カードを探す</button>
     <div id="search-results" class="search-result-div"></div>

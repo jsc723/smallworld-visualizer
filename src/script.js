@@ -132,10 +132,40 @@ function hasEdge(card1, card2) {
     return x === 1
 }
 
+function loadData(url) {
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then(data => {
+            // Handle the parsed data here
+            db = data;
+            enableSearch();
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Fetch error:', error);
+        });
+}
+
+var domContentLoaded = false;
+var db = [];
+loadData(db_url);
+function enableSearch() {
+    if (domContentLoaded && db.length > 0) {
+        const e = document.getElementById('search-input');
+        e.placeholder = search_placeholder;
+        e.disabled = false;
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function () {
 
-
+    domContentLoaded = true;
+    enableSearch();
     document.getElementById('clear-btn').addEventListener('click', () => clearGraph());
     document.getElementById('fileInput').addEventListener('change', () => importJSON());
     document.getElementById('import-btn').addEventListener('click', () => importJSON());
