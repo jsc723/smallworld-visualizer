@@ -400,7 +400,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const cell5 = document.createElement('td');
                 cell5.classList.add('table-cell');
-                cell5.textContent = `${result.Attack}/${result.Defense}`;
+                const atkStr = result.Attack >= 0 ? result.Attack : '?';
+                const defStr = result.Defense >= 0 ? result.Defense : '?';
+                cell5.textContent = `${atkStr}/${defStr}`;
 
                 const buttonsWidget = document.createElement('td')
                 buttonsWidget.classList.add('table-cell');
