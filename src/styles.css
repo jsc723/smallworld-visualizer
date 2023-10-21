@@ -152,10 +152,15 @@ body, html {
 .s_button:hover {
     background-color: #0056b3;
 }
-
+table {
+    border-collapse: collapse;
+}
 .search-result {
     margin-top: 0.3125em;
     margin-bottom: 0.3125em;
+}
+.search-result-row {
+    border-bottom: 0.0625em solid #000;
 }
 .text-container {
     display: flex;

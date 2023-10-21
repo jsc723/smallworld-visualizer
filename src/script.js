@@ -362,6 +362,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const table = document.createElement('table');
             results.forEach(result => {
                 const row = document.createElement('tr');
+                row.classList.add('search-result-row');
 
                 const addButtonCell = document.createElement('td');
                 const buttonAddElement = document.createElement('button');
