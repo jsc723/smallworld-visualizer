@@ -1,16 +1,38 @@
+@import url(sanitize.css);
+
 body, html {
     margin: 0;
     padding: 0;
-    height: 100%;
+    background-color: #ccc;
+}
+
+header {
+    background-color: #a2c1ff;
+    padding: 0 .5em;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.right-align {
+    text-align: right;
+    margin-left: auto;
+}
+
+.container {
+    margin: 0 auto 10px;
+    padding: 0.1em 0.6em;
+    width: 99%;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,.3);
 }
 
 #graph-container {
     /* Reset padding and margin */
     padding: 0;
-    margin: 0.0125em;
     /* Ensure the div expands to fill its container */
-    width: 99%;
-    height: calc(100% - 6.25em);
+    width: 100%;
+    height: calc(100vh - 6.5em);
 }
 
 .bounded-svg {
@@ -97,7 +119,7 @@ body, html {
     outline: none;
     margin: 0.25em;
     margin-top: 0.5em;
-    width: calc(100% - 10em);
+    flex-grow: 1;
 }
 
 /* Style for the search button */
@@ -152,6 +174,13 @@ body, html {
 .s_button:hover {
     background-color: #0056b3;
 }
+
+#graph-editor {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -162,16 +191,7 @@ table {
 .search-result-row {
     border-bottom: 0.0625em solid #000;
 }
-.text-container {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
 
-.right-align {
-    text-align: right;
-    margin-left: auto;
-}
 
 .table-cell {
     padding-left: 0.5em; 
@@ -179,18 +199,18 @@ table {
 }
 
 /* Adjust styles for mobile */
-@media screen and (min-resolution: 2dppx) {
+@media screen and (max-width: 768px) {
     /* Style for small screens (less than 768px wide) */
     /* Adjust font sizes, margins, and paddings as needed */
     body, html {
-        font-size: 2em;
+        font-size: 1.2em;
+    }
+    .container {
+        padding: 0.5em;
     }
 
     #graph-container {
-        /* Ensure the div expands to fill its container */
-        width: 90%;
-        height: calc(100% - 6.25em);
-        margin: 0.25em;
+        min-height: 720px;
     }
 
     .bounded-svg {
@@ -213,10 +233,9 @@ table {
         width: 80%;
     }
 
-    .my-checkbox {
-        height: 3em;
-        width: 3em;
+    .checkbox {
+        height: 1.5em;
+        width: 1.5em;
     }
 
-    /* ... (Other style adjustments) */
 }

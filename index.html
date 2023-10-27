@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta  name="viewport" content="width=device-width, initial-scale=1">
     <title>游戏王小世界可视化工具</title>
     <link rel="stylesheet" type="text/css" href="src/styles.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -23,35 +24,39 @@
         var db_url = "https://storage.googleapis.com/ygo-small-world-tool-bucket/cards-cn-v3.json";
         var search_placeholder = '搜索卡名';
     </script>
-        <div class="text-container">
-            <div style="display: inline;">游戏王小世界可视化工具 by jsc723 </div>
-            <div id="db-version" style="display: inline; margin-left: 0.25em"></div>
-            <div style="display: inline;" class="right-align">
-                <a id="help-link" href="#">使用说明</a>
-                <a id="cn-link" href="#"><strong>中文</strong></a>
-                <a id="jp-link" href="index-jp.html">日本語</a>
-            </div>
+    <header>
+        <div style="display: inline;">游戏王小世界可视化工具 by jsc723 </div>
+        <div id="db-version" style="display: inline; margin-left: 0.25em"></div>
+        <div style="display: inline;" class="right-align">
+            <a id="help-link" href="#">使用说明</a>
+            <a id="cn-link" href="#"><strong>中文</strong></a>
+            <a id="jp-link" href="index-jp.html">日本語</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div>
+            <button id="clear-btn" class="s_button_sm">新建</button>
+            <button id="export-btn" class="s_button_sm">保存</button>
+            <input type="file" id="fileInput" class="s_input_sm">
+            <button id="import-btn" class="s_button_sm">读取</button>
+            <button id="clear-select-btn" class="s_button_sm">清空选择</button>
+            <label for="force-checkbox">作用力</label>
+            <input type="checkbox" id="force-checkbox" name="force-checkbox" class="checkbox" checked>
+        </div>
+    
+        <div id="graph-container"></div>
+    
+        
+        <script src="src/script.js"></script>
+        <div id="graph-editor">
+            <input type="text" id="search-input" class="s_input" placeholder="正在加载数据库" disabled>
+            <button id="delete-node-button" class="s_button invisible">删除节点</button>
+            <button id="search-bridge-button" class="s_button invisible">搜索跳板</button>
         </div>
         
-
-    <div>
-        <button id="clear-btn" class="s_button_sm">新建</button>
-        <button id="export-btn" class="s_button_sm">保存</button>
-        <input type="file" id="fileInput" class="s_input_sm">
-        <button id="import-btn" class="s_button_sm">读取</button>
-        <button id="clear-select-btn" class="s_button_sm">清空选择</button>
-        <label for="force-checkbox">作用力</label>
-        <input type="checkbox" id="force-checkbox" name="force-checkbox" checked>
+        <div id="search-results" class="search-result-div"></div>
     </div>
-
-    <div id="graph-container"></div>
-
     
-    <script src="src/script.js"></script>
-    <input type="text" id="search-input" class="s_input" placeholder="正在加载数据库" disabled>
-    <button id="delete-node-button" class="s_button invisible">删除节点</button>
-    <button id="search-bridge-button" class="s_button invisible">搜索跳板</button>
-    
-    <div id="search-results" class="search-result-div"></div>
 </body>
 </html>

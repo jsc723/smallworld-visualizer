@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta  name="viewport" content="width=device-width, initial-scale=1">
     <title>遊戯王スモール・ワールド可視化ツール</title>
     <link rel="stylesheet" type="text/css" href="src/styles.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -24,7 +25,7 @@
         var search_placeholder = 'カード名から検索';
     </script>
 
-    <div class="text-container">
+    <header>
         <div style="display: inline;">遊戯王スモール・ワールド可視化ツール by jsc723</div>
         <div id="db-version" style="display: inline; margin-left: 0.25em"></div>
         <div style="display: inline;" class="right-align">
@@ -32,24 +33,30 @@
             <a id="cn-link" href="index.html">中文</a>
             <a id="jp-link" href="#"><strong>日本語</strong></a>
         </div>
-    </div>
+    </header>
 
-    <div>
-        <button id="clear-btn" class="s_button_sm">新規</button>
-        <button id="export-btn" class="s_button_sm">セーブ</button>
-        <input type="file" id="fileInput" class="s_input_sm">
-        <button id="import-btn" class="s_button_sm">ロード</button>
-        <button id="clear-select-btn" class="s_button_sm">選択解除</button>
-        <label for="force-checkbox">作用力</label>
-        <input type="checkbox" id="force-checkbox" name="force-checkbox" class="my-checkbox" checked>
-    </div>
+    <div class="container">
+        <div>
+            <button id="clear-btn" class="s_button_sm">新規</button>
+            <button id="export-btn" class="s_button_sm">セーブ</button>
+            <input type="file" id="fileInput" class="s_input_sm">
+            <button id="import-btn" class="s_button_sm">ロード</button>
+            <button id="clear-select-btn" class="s_button_sm">選択解除</button>
+            <label for="force-checkbox">作用力</label>
+            <input type="checkbox" id="force-checkbox" name="force-checkbox" class="my-checkbox" checked>
+        </div>
+        
+        <div id="graph-container"></div>
     
-    <div id="graph-container"></div>
+        <script src="src/script.js"></script>
+        <div id="graph-editor">
+            <input type="text" id="search-input" class="s_input" placeholder="データベースをロードしています" disabled>
+            <button id="delete-node-button" class="s_button invisible">ノードを削除</button>
+            <button id="search-bridge-button" class="s_button invisible">中継カードを探す</button>
+        </div>
+        
+        <div id="search-results" class="search-result-div"></div>
+    </div>
 
-    <script src="src/script.js"></script>
-    <input type="text" id="search-input" class="s_input" placeholder="データベースをロードしています" disabled>
-    <button id="delete-node-button" class="s_button invisible">ノードを削除</button>
-    <button id="search-bridge-button" class="s_button invisible">中継カードを探す</button>
-    <div id="search-results" class="search-result-div"></div>
 </body>
 </html>
