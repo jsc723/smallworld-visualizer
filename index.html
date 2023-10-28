@@ -44,18 +44,19 @@
             <label for="force-checkbox">作用力</label>
             <input type="checkbox" id="force-checkbox" name="force-checkbox" class="checkbox" checked>
         </div>
-    
-        <div id="graph-container"></div>
-    
         
-        <script src="src/script.js"></script>
-        <div id="graph-editor">
-            <input type="text" id="search-input" class="s_input" placeholder="正在加载数据库" disabled>
-            <button id="delete-node-button" class="s_button invisible">删除节点</button>
-            <button id="search-bridge-button" class="s_button invisible">搜索跳板</button>
+        <div class="dropdown-anchor">
+            <div id="graph-editor">
+                <input type="text" id="search-input" class="s_input" placeholder="正在加载数据库" disabled>
+                <button id="delete-node-button" class="s_button invisible">删除节点</button>
+                <button id="search-bridge-button" class="s_button invisible">搜索跳板</button>
+            </div>
+            <div class="search-result-div">
+                <div id="search-results" class="search-result-content"></div>
+            </div>
         </div>
-        
-        <div id="search-results" class="search-result-div"></div>
+        <div id="graph-container"></div>
+        <script src="src/script.js"></script>
     </div>
     
 </body>

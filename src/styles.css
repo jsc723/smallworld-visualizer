@@ -27,6 +27,10 @@ header {
     box-shadow: 0 0 5px rgba(0,0,0,.3);
 }
 
+.dropdown-anchor {
+    position: relative;
+}
+
 #graph-container {
     /* Reset padding and margin */
     padding: 0;
@@ -76,10 +80,30 @@ header {
 .reachable-node {
     fill: orange;
 }
-
 .search-result-div {
-    min-height: 20em; 
+    display: none;
+    position: absolute;
+    background-color: #eee;
+    margin-top: .2em;
+    margin-left: .5em;
+    border: 1px solid #000;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
+
+.dropdown-anchor:focus-within .search-result-div {
+    display: block;
+}
+
+.search-result-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 70vh; 
+    max-width: 90vw;
+}
+
 
 /* Style for text elements */
 .node-label {
@@ -189,13 +213,21 @@ table {
     margin-bottom: 0.3125em;
 }
 .search-result-row {
+    margin: 0.125em 0.25em;
+    padding: 0.125em 0.25em;
     border-bottom: 0.0625em solid #000;
+    display: grid;
+    grid-template-columns: 8em 2fr 1fr 1fr 1fr 1fr;
+    align-items: center;
 }
-
 
 .table-cell {
     padding-left: 0.5em; 
     padding-right: 0.5em; 
+}
+.btn-table-cell {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 /* Adjust styles for mobile */
@@ -237,5 +269,12 @@ table {
         height: 1.5em;
         width: 1.5em;
     }
+
+    .search-result-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    
 
 }

@@ -407,6 +407,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const buttonsWidget = document.createElement('td')
                 buttonsWidget.classList.add('table-cell');
+                buttonsWidget.classList.add('btn-table-cell');
                 buttonsWidget.appendChild(addButtonCell);
                 buttonsWidget.appendChild(delButtonCell);
 
