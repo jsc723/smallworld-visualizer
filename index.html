@@ -20,7 +20,7 @@
     <script src="src/utils-cn.js"></script>
     <!-- <script src="src/constants/cards-cn.js"></script> -->
     <script>
-        var help_msg = '在左下角搜索栏中搜索卡名后即可添加到图中。点击节点可选择卡片（变为红色），选择一个节点后，从这个节点能用小世界检索到的卡会变成橙色，选择两个以上节点后可以当跳板的节点会变为绿色。并且，此时搜索栏的右侧会出现“搜索跳板”的按钮，点击后可以从数据库中查找跳板。再次点击选中的卡片会取消选择';
+        var help_msg = '在搜索栏中搜索卡名后即可添加到图中。点击节点可选择卡片（变为红色），选择一个节点后，从这个节点能用小世界检索到的卡会变成橙色，选择两个以上节点后可以当跳板的节点会变为绿色。并且，此时搜索栏的右侧会出现“搜索跳板”的按钮，点击后可以从数据库中查找跳板。再次点击选中的卡片会取消选择';
         var db_url = "https://storage.googleapis.com/ygo-small-world-tool-bucket/cards-cn-v3.json";
         var search_placeholder = '搜索卡名';
     </script>
@@ -58,6 +58,12 @@
         <div id="graph-container"></div>
         <script src="src/script.js"></script>
     </div>
+
+    <footer>
+        <span class="center-align">
+            <a href="https://github.com/jsc723/smallworld-visualizer" target="_blank">Github</a>
+        </span>
+    </footer>
     
 </body>
 </html>

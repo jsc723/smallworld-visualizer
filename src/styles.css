@@ -14,13 +14,30 @@ header {
     flex-wrap: wrap;
 }
 
+footer {
+    font-size: 0.9em;
+    color: #fff;
+    background-color: #093691;
+    padding: 0 .5em;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+footer a {
+    color: #fff
+}
+
+.center-align {
+    margin: 0 auto;
+}
+
 .right-align {
     text-align: right;
     margin-left: auto;
 }
 
 .container {
-    margin: 0 auto 10px;
+    margin: 0 auto;
     padding: 0.1em 0.6em;
     width: 99%;
     background-color: #fff;
