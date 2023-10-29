@@ -1,6 +1,7 @@
 @import url(sanitize.css);
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     background-color: #ccc;
@@ -23,6 +24,7 @@ footer {
     align-items: center;
     flex-wrap: wrap;
 }
+
 footer a {
     color: #fff
 }
@@ -41,7 +43,7 @@ footer a {
     padding: 0.1em 0.6em;
     width: 99%;
     background-color: #fff;
-    box-shadow: 0 0 5px rgba(0,0,0,.3);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }
 
 .dropdown-anchor {
@@ -57,8 +59,9 @@ footer a {
 }
 
 .bounded-svg {
-    border: 0.125em solid #000; /* Set the border style */
-     /* Ensure the SVG fills the entire parent div */
+    border: 0.125em solid #000;
+    /* Set the border style */
+    /* Ensure the SVG fills the entire parent div */
     width: 100%;
     height: 100%;
 }
@@ -97,6 +100,7 @@ footer a {
 .reachable-node {
     fill: orange;
 }
+
 .search-result-div {
     display: none;
     position: absolute;
@@ -106,7 +110,7 @@ footer a {
     border: 1px solid #000;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
@@ -117,7 +121,7 @@ footer a {
 .search-result-content {
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 70vh; 
+    max-height: 70vh;
     max-width: 90vw;
 }
 
@@ -225,10 +229,12 @@ footer a {
 table {
     border-collapse: collapse;
 }
+
 .search-result {
     margin-top: 0.3125em;
     margin-bottom: 0.3125em;
 }
+
 .search-result-row {
     margin: 0.125em 0.25em;
     padding: 0.125em 0.25em;
@@ -239,9 +245,10 @@ table {
 }
 
 .table-cell {
-    padding-left: 0.5em; 
-    padding-right: 0.5em; 
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
+
 .btn-table-cell {
     display: flex;
     flex-wrap: wrap;
@@ -249,49 +256,62 @@ table {
 
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content/Box */
-  .modal-content {
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto;
+    /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-  }
-  
-  /* The Close Button */
-  .close {
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
+}
+
+.close:hover,
+.close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-  }
+}
 
 /* Adjust styles for mobile */
 @media screen and (max-width: 768px) {
+
     /* Style for small screens (less than 768px wide) */
     /* Adjust font sizes, margins, and paddings as needed */
-    body, html {
+    body,
+    html {
         font-size: 1.2em;
     }
+
     .container {
         padding: 0.5em;
     }
@@ -302,10 +322,10 @@ table {
 
     .bounded-svg {
         /* Adjust border width and other styles for smaller screens */
-        border: 0.25m solid #000; 
+        border: 0.25m solid #000;
     }
 
-    
+
     .node-label {
         font-size: 0.75em;
     }
@@ -330,6 +350,6 @@ table {
         flex-wrap: wrap;
         align-items: center;
     }
-    
+
 
 }
